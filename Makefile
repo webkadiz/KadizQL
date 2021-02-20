@@ -1,8 +1,6 @@
 compile-command = g++ ./src/$@.cpp -c -o ./src/$@.o
 CXXFLAGS = -std=c++17
 
-build:
-	echo $(BASEDEPS)
 
 prepare:
 	cp include/* tests
