@@ -1,0 +1,4 @@
+*.o
+src/*.h
+tests/*.h
+.vscode
