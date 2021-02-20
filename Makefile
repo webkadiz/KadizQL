@@ -1,4 +1,5 @@
 compile-command = g++ ./src/$@.cpp -c -o ./src/$@.o
+CXXFLAGS = -std=c++17
 
 build:
 	echo $(BASEDEPS)
@@ -8,17 +9,14 @@ prepare:
 	cp include/* src
 
 compile:
-	cd src && g++ *.cpp -c
+	cd src && g++ $(CXXFLAGS) *.cpp -c
 
 %.cpp:
-	g++ src/$@ -c -o src/$*.o
+	g++ $(CXXFLAGS) src/$@ -c -o src/$*.o
 
 %.test: %.cpp
 	g++ tests/$@.cpp src/*.o -o tests/$@
 	./tests/$@
-
-utils:
-	$(compile-command)
 
 clean:
 	rm src/*.h || true
