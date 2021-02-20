@@ -34,11 +34,3 @@ public:
 
 
 };
-
-int main() {
-    KadizQLTable* kqlTable = new KadizQLTable();
-
-    string content = kqlTable->readTableFromFile("test");
-
-    cout << content;
-}
