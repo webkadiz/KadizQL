@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "CSVParser.h"
-#include "utils.h"
+#include "../include/CSVParser.h"
+#include "../include/utils.h"
 
 void CSVParser::prepare() {
 	this->table.clear();

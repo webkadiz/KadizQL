@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "CSVParser.h"
+#include "../include/CSVParser.h"
 
 int main() {
     std::string text;    
