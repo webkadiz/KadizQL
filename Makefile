@@ -13,7 +13,7 @@ compile:
 	g++ $(CXXFLAGS) src/$@ -c -o src/$*.o
 
 %.test: %.cpp
-	g++ tests/$@.cpp src/*.o -o tests/$@
+	g++ $(CXXFLAGS) tests/$@.cpp src/*.o -o tests/$@
 	./tests/$@
 
 clean:
