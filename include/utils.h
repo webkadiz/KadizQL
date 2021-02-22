@@ -2,7 +2,9 @@
 
 #include <string>
 
-std::string repeat_string(std::string, int);
-int getStartForErrorMsg(int, std::string);
-int getEndForErrorMsg(int, std::string);
-std::string getContextForErrorMsg(int, std::string);
+using namespace std;
+
+string repeat_string(string, int);
+int getStartForErrorMsg(int, string);
+int getEndForErrorMsg(int, string);
+string getContextForErrorMsg(int, string);
