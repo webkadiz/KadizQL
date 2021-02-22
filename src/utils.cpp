@@ -1,7 +1,9 @@
 #include "utils.h"
 
-std::string repeat_string(std::string str, int n) {
-    std::string repeated_str;
+using namespace std;
+
+string repeat_string(string str, int n) {
+    string repeated_str;
 
     for (int i = 0; i < n; i++) {
         repeated_str += str;
@@ -10,7 +12,7 @@ std::string repeat_string(std::string str, int n) {
     return repeated_str;
 }
 
-int getStartForErrorMsg(int curPos, std::string parseText) {
+int getStartForErrorMsg(int curPos, string parseText) {
     int start = curPos;
 	while(true) {
 		if (
@@ -24,7 +26,7 @@ int getStartForErrorMsg(int curPos, std::string parseText) {
     return start;
 }
 
-int getEndForErrorMsg(int curPos, std::string parseText) {
+int getEndForErrorMsg(int curPos, string parseText) {
 	int end = curPos;
 	while(true) {
 		if (
@@ -38,7 +40,7 @@ int getEndForErrorMsg(int curPos, std::string parseText) {
     return end;
 }
 
-std::string getContextForErrorMsg(int curPos, std::string parseText) {
+string getContextForErrorMsg(int curPos, string parseText) {
     int start = getStartForErrorMsg(curPos, parseText);
     int end = getEndForErrorMsg(curPos, parseText);
 

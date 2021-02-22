@@ -1,36 +1,32 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "KadizQL.cpp"
+#include "../include/KadizQLTable.h"
 
 using namespace std;
+using namespace KadizQL;
 
-class KadizQLTable {
-public:
-    string readTableFromFile(string filename) {
-        string fileContent, line;
-        ifstream file;
-        
-        file.open(filename);
+string Table::readTableFromFile(string filename) {
+    string fileContent, line;
+    ifstream file;
+    
+    file.open(filename);
 
-        if (file.is_open()) {
-            while(getline(file, line)) fileContent += line + "\n";
-            file.close();
-            return fileContent;
-        } else {
-            cout << "Error: file " + filename + " not open";
-            fileContent = "";
-            return fileContent;
-        }
+    if (file.is_open()) {
+        while(getline(file, line)) fileContent += line + "\n";
+        file.close();
+        return fileContent;
+    } else {
+        cout << "Error: file " + filename + " not open";
+        fileContent = "";
+        return fileContent;
     }
+}
 
-    void readTable() {
+void Table::readTable() {
 
-    }
+}
 
-    void writeTable() {
+void Table::writeTable() {
 
-    }
-
-
-};
+}
