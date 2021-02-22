@@ -2,8 +2,8 @@
 #include <filesystem>
 #include "../include/KadizQLRDBMS.h"
 
-namespace fs = std::filesystem;
 using namespace KadizQL;
+namespace fs = std::filesystem;
 
 fs::path RDBMS::getBaseDir() {
     fs::path homeDir = getenv("HOME");

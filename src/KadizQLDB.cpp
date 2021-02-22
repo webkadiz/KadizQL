@@ -4,9 +4,9 @@
 #include "../include/KadizQLRDBMS.h"
 #include "../include/KadizQLDB.h"
 
-namespace fs = std::filesystem;
 using namespace std;
 using namespace KadizQL;
+namespace fs = std::filesystem;
 
 bool DB::createDBDir(string dirName) {
     fs::path baseDir = RDBMS::getBaseDir();
@@ -36,5 +36,5 @@ bool DB::createDBDir(string dirName) {
 bool DB::createDB(string dbName) {
     bool createDirStatus = createDBDir(dbName);
 
-    
+
 }

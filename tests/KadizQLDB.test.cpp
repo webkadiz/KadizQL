@@ -3,8 +3,8 @@
 #include "../include/KadizQLRDBMS.h"
 #include "../include/KadizQLDB.h"
 
-namespace fs = std::filesystem;
 using namespace KadizQL;
+namespace fs = std::filesystem;
 
 int main() {
     RDBMS::setBaseDirName(".kadizql-test");
