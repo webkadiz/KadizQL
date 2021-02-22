@@ -8,28 +8,33 @@ namespace fs = std::filesystem;
 using namespace std;
 using namespace KadizQL;
 
-int DB::createDBDir(string dirName) {
+bool DB::createDBDir(string dirName) {
     fs::path baseDir = RDBMS::getBaseDir();
     fs::path dbDirName = baseDir / dirName;
     bool createDirStatus;
 
     if (fs::exists(dbDirName)) {
-        cout << "db dir exists";
+        createDirStatus = true;
     } else if (fs::exists(baseDir)) {
-        bool createDirStatus = fs::create_directory(dbDirName);
-        cout << "db dir create status " << createDirStatus;
+        try {
+            createDirStatus = fs::create_directory(dbDirName);
+        } catch(fs::filesystem_error& e) {
+            createDirStatus = false;
+        }
     } else {
         try {
             createDirStatus = fs::create_directory(baseDir);
-            cout << "db dir create status " << createDirStatus;
             createDirStatus = fs::create_directory(dbDirName);
-            cout << "db dir create status " << createDirStatus;
-        } catch(std::filesystem::filesystem_error& e) {
-            cout << e.what();
+        } catch(fs::filesystem_error& e) {
+            createDirStatus = false;
         }
     }
+
+    return createDirStatus;
 }
 
-int DB::createDB(string dbName) {
-    createDBDir(dbName);
+bool DB::createDB(string dbName) {
+    bool createDirStatus = createDBDir(dbName);
+
+    
 }

@@ -9,7 +9,7 @@ namespace KadizQL {
     class DB {
         static string usedDB;
     public:
-        static int createDBDir(string dirName);
-        static int createDB(string dbName);
+        static bool createDBDir(string dirName);
+        static bool createDB(string dbName);
     };
 }

@@ -2,8 +2,8 @@
 #include <string>
 #include <filesystem>
 
-using namespace std;
 namespace fs = std::filesystem;
+using namespace std;
 
 namespace KadizQL {
     static string baseDirName = ".kadizql";
