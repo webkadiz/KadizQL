@@ -36,5 +36,5 @@ bool DB::createDBDir(string dirName) {
 bool DB::createDB(string dbName) {
     bool createDirStatus = createDBDir(dbName);
 
-
+    return createDirStatus;
 }
