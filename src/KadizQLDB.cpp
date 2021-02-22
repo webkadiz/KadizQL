@@ -8,6 +8,9 @@ using namespace std;
 using namespace KadizQL;
 namespace fs = std::filesystem;
 
+
+string DB::usedDB = "";
+
 bool DB::createDBDir(string dirName) {
     fs::path baseDir = RDBMS::getBaseDir();
     fs::path dbDirName = baseDir / dirName;
@@ -37,4 +40,17 @@ bool DB::createDB(string dbName) {
     bool createDirStatus = createDBDir(dbName);
 
     return createDirStatus;
+}
+
+
+void DB::useDB(string dbName) {
+    usedDB = dbName;
+}
+
+string DB::getUsedDB() {
+    return usedDB;
+}
+
+fs::path DB::getDBDir() {
+    return RDBMS::getBaseDir() / usedDB;
 }
