@@ -17,6 +17,5 @@ compile:
 	./tests/$@
 
 clean:
-	rm src/*.h || true
-	rm tests/*.h || true
+	rm tests/*.test
 	rm *.o */*.o || true
