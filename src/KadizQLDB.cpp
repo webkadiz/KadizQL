@@ -42,7 +42,6 @@ bool DB::createDB(string dbName) {
     return createDirStatus;
 }
 
-
 void DB::useDB(string dbName) {
     usedDB = dbName;
 }

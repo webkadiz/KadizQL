@@ -5,6 +5,8 @@
 #include <vector>
 #include "../include/KadizQLDB.h"
 #include "../include/KadizQLTable.h"
+#include "../include/utils.h"
+#include "../include/KadizQLColumn.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -19,7 +21,7 @@ fs::path Table::getTableDir() {
     return DB::getDBDir() / this->tableName;
 }
 
-bool Table::create(vector<vector<string>> fields) {
+bool Table::create(vector<vector<string>> tableDesc) {
 
     if (DB::getUsedDB().empty()) {
         cerr << "you should choose database before create table";
@@ -33,30 +35,45 @@ bool Table::create(vector<vector<string>> fields) {
         return false;
     }
 
-    this->createScheme(fields);
+
+    try {
+        this->createScheme(tableDesc);
+    } catch(std::exception &e) {
+        cerr << "can not create scheme";
+    }
     this->createStorage();
 }
 
-bool Table::createScheme(vector<vector<string>> fields) {
+void Table::createScheme(vector<vector<string>> tableDesc) {
     fs::path tableDir = this->getTableDir();
     fs::path tableSchemeFilePath = tableDir / tableName;
     string tableSchemeFileName = tableSchemeFilePath.string() + ".scheme";
 
     ofstream tableSchemeFile (tableSchemeFileName);
 
-    for (vector<string> field: fields) {
-        for(string fieldParam: field) {
-            tableSchemeFile << fieldParam + " ";
+    for (vector<string> fields: tableDesc) {
+        Column *column = new Column(fields);
+
+        bool isAllFieldsProcessed = column->processFields();
+
+        if (isAllFieldsProcessed == false) {
+            throw std::exception();
+        }
+
+        vector<string> rightFields = column->getFields();
+
+        for (string field: rightFields) {
+            tableSchemeFile << field;
+            if (field == rightFields.back()) continue;
+            tableSchemeFile << ",";
         }
         tableSchemeFile << "\n";
     }
 
     tableSchemeFile.close();
-
-    return true;
 }
 
-bool Table::createStorage() {
+void Table::createStorage() {
     fs::path tableDir = this->getTableDir();
     fs::path tableStorageFilePath = tableDir / tableName;
     string tableStorageFileName = tableStorageFilePath.string() + ".data";
@@ -64,8 +81,6 @@ bool Table::createStorage() {
     ofstream tableStorageFile (tableStorageFileName);
 
     tableStorageFile.close();
-
-    return true;
 }
 
 string Table::readTableFromFile(string filename) {

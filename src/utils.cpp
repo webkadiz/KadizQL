@@ -47,3 +47,13 @@ string getContextForErrorMsg(int curPos, string parseText) {
 
     return parseText.substr(start, end);
 }
+
+string toUpperCase(string str) {
+	string upperStr;
+
+	for (char c: str) {
+		upperStr += toupper(c);
+	}
+
+	return upperStr;
+}

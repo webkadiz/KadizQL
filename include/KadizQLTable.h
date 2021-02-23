@@ -14,8 +14,8 @@ namespace KadizQL {
         std::string readTableFromFile(std::string filename);
         void readTable();
         void writeTable();
-        bool createScheme(vector<vector<string>>);
-        bool createStorage();
+        void createScheme(vector<vector<string>>);
+        void createStorage();
         fs::path getTableDir();
     };
 }
