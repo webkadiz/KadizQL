@@ -1,3 +1,4 @@
+#include <fstream>
 #include <string>
 #include "../include/utils.h"
 
@@ -56,4 +57,16 @@ string toUpperCase(string str) {
 	}
 
 	return upperStr;
+}
+
+
+string readFile(ifstream &file) {
+	string text;
+	char c;
+
+	while(file.get(c)) {
+		text += c;
+	}
+
+	return text;
 }

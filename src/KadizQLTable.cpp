@@ -7,6 +7,7 @@
 #include "../include/KadizQLTable.h"
 #include "../include/utils.h"
 #include "../include/KadizQLColumn.h"
+#include "../include/CSVParser.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -100,10 +101,23 @@ string Table::readTableFromFile(string filename) {
     }
 }
 
-void Table::readTable() {
+void Table::load() {
+    string tableSchemeFileName = this->getTableDir() / (tableName + ".scheme");
 
-}
+    ifstream tableSchemeFile (tableSchemeFileName);
 
-void Table::writeTable() {
+    string schemeText = readFile(tableSchemeFile);
 
+    CSVParser *csvParser = new CSVParser();
+
+    csvParser->prepare();
+    vector<vector<string>> scheme = csvParser->parse(schemeText);
+
+    for(vector<string> column: scheme) {
+        for (string field: column) {
+            cout << field;
+        }
+    }
+
+    tableSchemeFile.close();
 }

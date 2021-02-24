@@ -12,11 +12,11 @@ namespace KadizQL {
         Table(string);
         bool create(vector<vector<string>>);
         std::string readTableFromFile(std::string filename);
-        void readTable();
-        void writeTable();
         void createScheme(vector<vector<string>>);
         void createStorage();
         fs::path getTableDir();
+        void load();
+        void select();
     };
 }
 

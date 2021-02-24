@@ -9,6 +9,8 @@ int main() {
     Table *table = new Table("name");
 
     table->create({
-        {"id", "int"}
+        {"id", "int", "date"}
     });
+
+    table->load();
 }
