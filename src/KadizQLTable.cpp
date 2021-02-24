@@ -52,20 +52,20 @@ void Table::createScheme(vector<vector<string>> tableDesc) {
 
     ofstream tableSchemeFile (tableSchemeFileName);
 
-    for (vector<string> fields: tableDesc) {
-        FieldScheme *fieldScheme = new FieldScheme(fields);
+    for (vector<string> params: tableDesc) {
+        FieldScheme *fieldScheme = new FieldScheme(params);
 
-        bool isAllFieldsProcessed = fieldScheme->processFields();
+        bool isAllParamsProcessed = fieldScheme->processFields();
 
-        if (isAllFieldsProcessed == false) {
+        if (isAllParamsProcessed == false) {
             throw std::exception();
         }
 
-        vector<string> rightFields = fieldScheme->getFields();
+        vector<string> rightFields = fieldScheme->getProcessedParams();
 
-        for (string field: rightFields) {
-            tableSchemeFile << field;
-            if (field == rightFields.back()) continue;
+        for (string param: rightFields) {
+            tableSchemeFile << param;
+            if (param == rightFields.back()) continue;
             tableSchemeFile << ",";
         }
         tableSchemeFile << "\n";

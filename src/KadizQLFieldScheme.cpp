@@ -7,15 +7,19 @@ using namespace KadizQL;
 
 const vector<string> FieldScheme::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
 
-FieldScheme::FieldScheme(vector<string> fields) {
-    this->fields = fields;
+FieldScheme::FieldScheme(vector<string> params) {
+    this->params = params;
 }
 
-vector<string> FieldScheme::getFields() {
-    return this->fields;
+vector<string> FieldScheme::getParams() {
+    return this->params;
 }
 
-bool FieldScheme::processFields() {
+vector<string> FieldScheme::getProcessedParams() {
+    return this->processedParams;
+}
+
+bool FieldScheme::processParams() {
     int fieldIdx = 0;
 
     try {
@@ -36,10 +40,11 @@ bool FieldScheme::processFields() {
 
 void FieldScheme::processName(int &idx) {
     try {
-        string field = this->fields.at(idx);
+        string param = this->params.at(idx);
 
-        this->fields[idx] = field = toUpperCase(field);
-        this->name = field;
+        param = toUpperCase(param);
+        this->processedParams.push_back(param);
+        this->name = param;
         idx++;
     } catch(std::out_of_range &e) {
         cerr << "set name for column";
@@ -50,12 +55,14 @@ void FieldScheme::processName(int &idx) {
 
 void FieldScheme::processType(int &idx) {
     try {
-        string field = this->fields.at(idx);
+        string param = this->params.at(idx);
 
-        this->fields[idx] = field = toUpperCase(field);
+        param = toUpperCase(param);
+        this->processedParams.push_back(param);
+
 
         for (string type: TYPES) {
-            if (field.find(type) == 0) {
+            if (param.find(type) == 0) {
                 this->type = type;
                 break;
             }
@@ -79,11 +86,12 @@ void FieldScheme::processType(int &idx) {
 
 void FieldScheme::processNotNull(int &idx) {
     try {
-        string field = this->fields.at(idx);
+        string param = this->params.at(idx);
 
-        this->fields[idx] = field = toUpperCase(field);
+        param = toUpperCase(param);
+        this->processedParams.push_back(param);
 
-        if (field == "NOT NULL") {
+        if (param == "NOT NULL") {
             this->isNotNull = true;
             idx++;
         }
@@ -92,11 +100,12 @@ void FieldScheme::processNotNull(int &idx) {
 
 void FieldScheme::processDefault(int &idx) {
     try {
-        string field = this->fields.at(idx);
+        string param = this->params.at(idx);
 
-        this->fields[idx] = field = toUpperCase(field);
+        param = toUpperCase(param);
+        this->processedParams.push_back(param);
 
-        if (field.find("DEFAULT") == 0) {
+        if (param.find("DEFAULT") == 0) {
             this->isDefault = true;
             idx++;
         }
@@ -105,11 +114,12 @@ void FieldScheme::processDefault(int &idx) {
 
 void FieldScheme::processAutoIncrement(int &idx) {
     try {
-        string field = this->fields.at(idx);
+        string param = this->params.at(idx);
 
-        this->fields[idx] = field = toUpperCase(field);
+        param = toUpperCase(param);
+        this->processedParams.push_back(param);
 
-        if (field.find("AUTO INCREMENT") == 0) {
+        if (param.find("AUTO INCREMENT") == 0) {
             this->isAutoIncrement = true;
             idx++;
         }
@@ -118,11 +128,12 @@ void FieldScheme::processAutoIncrement(int &idx) {
 
 void FieldScheme::processPrimaryKey(int &idx) {
     try {
-        string field = this->fields.at(idx);
+        string param = this->params.at(idx);
 
-        this->fields[idx] = field = toUpperCase(field);
+        param = toUpperCase(param);
+        this->processedParams.push_back(param);
 
-        if (field.find("PRIMARY KEY") == 0) {
+        if (param.find("PRIMARY KEY") == 0) {
             this->isPrimaryKey = true;
             idx++;
         }

@@ -7,7 +7,8 @@ using namespace std;
 namespace KadizQL {
     class FieldScheme {
         static const vector<string> TYPES;
-        vector<string> fields;
+        vector<string> params;
+        vector<string> processedParams;
         bool isNotNull = false;
         bool isDefault = false;
         bool isAutoIncrement = false;
@@ -16,8 +17,9 @@ namespace KadizQL {
         string name;
     public:
         FieldScheme(vector<string>);
-        vector<string> getFields();
-        bool processFields();        
+        vector<string> getParams();
+        vector<string> getProcessedParams();
+        bool processParams();
         void processName(int &);
         void processType(int &);
         void processNotNull(int &);
