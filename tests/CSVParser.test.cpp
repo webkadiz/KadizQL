@@ -181,5 +181,20 @@ int main() {
        printf("test 12 passed\n");
     }
 
+// input
+/*\n*/
+// with empty input must be 1 element
+    text = "\n";
+
+    table = parser->parse(text);
+
+    if (table.size() == 1 && table[0].size() == 1) {
+        printf("test 13 passed");
+    } else {
+        printf("test 13 failed\n");
+        exit(13);
+    }
+
+
     return 0;
 }
