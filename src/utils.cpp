@@ -70,3 +70,15 @@ string readFile(ifstream &file) {
 
 	return text;
 }
+
+string readLine(ifstream &file) {
+	string text;
+	char c;
+
+	while(file.get(c)) {
+		text += c;
+		if (c == '\n') break;
+	}
+
+	return text;
+}
