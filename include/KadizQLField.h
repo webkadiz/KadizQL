@@ -1,7 +1,7 @@
 #pragma once
 
 namespace KadizQL {
-    class Column {
+    class Field {
         
     };
 }

@@ -20,15 +20,15 @@ vector<string> FieldScheme::getProcessedParams() {
 }
 
 bool FieldScheme::processParams() {
-    int fieldIdx = 0;
+    int paramIdx = 0;
 
     try {
-        this->processName(fieldIdx);
-        this->processType(fieldIdx);
-        this->processNotNull(fieldIdx);
-        this->processDefault(fieldIdx);
-        this->processAutoIncrement(fieldIdx);
-        this->processPrimaryKey(fieldIdx);
+        this->processName(paramIdx);
+        this->processType(paramIdx);
+        this->processNotNull(paramIdx);
+        this->processDefault(paramIdx);
+        this->processAutoIncrement(paramIdx);
+        this->processPrimaryKey(paramIdx);
 
         return true;
     } catch(std::out_of_range &e) {

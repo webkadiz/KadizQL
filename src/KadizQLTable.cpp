@@ -104,3 +104,7 @@ void Table::load() {
 
     tableSchemeFile.close();
 }
+
+Field *Table::select(vector<string> fields) {
+
+}

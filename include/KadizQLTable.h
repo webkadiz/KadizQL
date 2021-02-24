@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "KadizQLFieldScheme.h"
+#include "KadizQLField.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -18,7 +19,7 @@ namespace KadizQL {
         void createStorage();
         fs::path getTableDir();
         void load();
-        void select();
+        Field *select(vector<string>);
     };
 }
 
