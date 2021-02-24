@@ -22,7 +22,7 @@ fs::path Table::getTableDir() {
     return DB::getDBDir() / this->tableName;
 }
 
-bool Table::create(vector<vector<string>> tableDesc) {
+bool Table::create(vector<vector<string>> tableScheme) {
 
     if (DB::getUsedDB().empty()) {
         cerr << "you should choose database before create table";
@@ -38,21 +38,21 @@ bool Table::create(vector<vector<string>> tableDesc) {
 
 
     try {
-        this->createScheme(tableDesc);
+        this->createScheme(tableScheme);
     } catch(std::exception &e) {
         cerr << "can not create scheme";
     }
     this->createStorage();
 }
 
-void Table::createScheme(vector<vector<string>> tableDesc) {
+void Table::createScheme(vector<vector<string>> tableScheme) {
     fs::path tableDir = this->getTableDir();
     fs::path tableSchemeFilePath = tableDir / tableName;
     string tableSchemeFileName = tableSchemeFilePath.string() + ".scheme";
 
     ofstream tableSchemeFile (tableSchemeFileName);
 
-    for (vector<string> params: tableDesc) {
+    for (vector<string> params: tableScheme) {
         FieldScheme *fieldScheme = new FieldScheme(params);
 
         bool isAllParamsProcessed = fieldScheme->processParams();
@@ -94,12 +94,12 @@ void Table::load() {
     CSVParser *csvParser = new CSVParser();
 
     csvParser->prepare();
-    vector<vector<string>> scheme = csvParser->parse(schemeText);
+    vector<vector<string>> tableScheme = csvParser->parse(schemeText);
 
-    for(vector<string> column: scheme) {
-        for (string field: column) {
-            cout << field;
-        }
+    for(vector<string> params: tableScheme) {
+        FieldScheme *fieldScheme = new FieldScheme(params);
+
+        this->tableScheme.push_back(fieldScheme);
     }
 
     tableSchemeFile.close();

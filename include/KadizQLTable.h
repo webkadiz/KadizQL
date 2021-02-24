@@ -10,7 +10,7 @@ namespace KadizQL {
     class Table {
     private:
         string tableName;
-        vector<FieldScheme *> schema;
+        vector<FieldScheme *> tableScheme;
     public:
         Table(string);
         bool create(vector<vector<string>>);
