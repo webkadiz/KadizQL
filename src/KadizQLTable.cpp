@@ -84,7 +84,7 @@ void Table::createStorage() {
     tableStorageFile.close();
 }
 
-void Table::load() {
+void Table::loadScheme() {
     string tableSchemeFileName = this->getTableDir() / (tableName + ".scheme");
 
     ifstream tableSchemeFile (tableSchemeFileName);
@@ -93,7 +93,6 @@ void Table::load() {
 
     CSVParser *csvParser = new CSVParser();
 
-    csvParser->prepare();
     vector<vector<string>> tableSchemeData = csvParser->parse(tableSchemeText);
 
     for(vector<string> params: tableSchemeData) {
@@ -105,6 +104,32 @@ void Table::load() {
     tableSchemeFile.close();
 }
 
-Field *Table::select(vector<string> fields) {
+Field *Table::select(vector<string> fieldNames) {
+    string tableDataFileName = this->getTableDir() / (tableName + ".data");
+    int countLines, countErrors;
+    string line;
+    string textForParsing;
+    vector<string> parsedRowFields;
+    CSVParser *csvParser = new CSVParser();
+    ifstream tableDataFile (tableDataFileName);
+
+
+    while(true) {
+        line = readLine(tableDataFile);
+        countLines++;
+
+        if (line.empty()) break;
+
+        textForParsing += line;
+        try {
+            parsedRowFields = csvParser->parse(textForParsing)[0];
+        } catch(std::exception &e) {
+            countErrors++;
+        }
+    }
+
+    if (countErrors == countLines) {
+
+    }
 
 }
