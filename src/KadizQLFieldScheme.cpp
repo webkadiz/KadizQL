@@ -139,3 +139,7 @@ void FieldScheme::processPrimaryKey(int &idx) {
         }
     } catch(std::out_of_range &e) {}
 }
+
+string FieldScheme::getName() {
+    return this->name;
+}

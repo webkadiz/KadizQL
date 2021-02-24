@@ -17,6 +17,7 @@ namespace KadizQL {
         string name;
     public:
         FieldScheme(vector<string>);
+        string getName();
         vector<string> getParams();
         vector<string> getProcessedParams();
         bool processParams();
