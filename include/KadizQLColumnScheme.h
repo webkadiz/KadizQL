@@ -5,7 +5,7 @@
 using namespace std;
 
 namespace KadizQL {
-    class Column {
+    class ColumnScheme {
         static const vector<string> TYPES;
         vector<string> fields;
         bool isNotNull = false;
@@ -15,7 +15,7 @@ namespace KadizQL {
         string type;
         string name;
     public:
-        Column(vector<string>);
+        ColumnScheme(vector<string>);
         vector<string> getFields();
         bool processFields();        
         void processName(int &);

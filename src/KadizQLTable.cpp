@@ -6,7 +6,7 @@
 #include "../include/KadizQLDB.h"
 #include "../include/KadizQLTable.h"
 #include "../include/utils.h"
-#include "../include/KadizQLColumn.h"
+#include "../include/KadizQLColumnScheme.h"
 #include "../include/CSVParser.h"
 
 using namespace std;
@@ -53,15 +53,15 @@ void Table::createScheme(vector<vector<string>> tableDesc) {
     ofstream tableSchemeFile (tableSchemeFileName);
 
     for (vector<string> fields: tableDesc) {
-        Column *column = new Column(fields);
+        ColumnScheme *columnScheme = new ColumnScheme(fields);
 
-        bool isAllFieldsProcessed = column->processFields();
+        bool isAllFieldsProcessed = columnScheme->processFields();
 
         if (isAllFieldsProcessed == false) {
             throw std::exception();
         }
 
-        vector<string> rightFields = column->getFields();
+        vector<string> rightFields = columnScheme->getFields();
 
         for (string field: rightFields) {
             tableSchemeFile << field;

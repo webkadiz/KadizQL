@@ -1,21 +1,21 @@
 #include <iostream>
-#include "../include/KadizQLColumn.h"
+#include "../include/KadizQLColumnScheme.h"
 #include "../include/utils.h"
 
 using namespace std;
 using namespace KadizQL;
 
-const vector<string> Column::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
+const vector<string> ColumnScheme::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
 
-Column::Column(vector<string> fields) {
+ColumnScheme::ColumnScheme(vector<string> fields) {
     this->fields = fields;
 }
 
-vector<string> Column::getFields() {
+vector<string> ColumnScheme::getFields() {
     return this->fields;
 }
 
-bool Column::processFields() {
+bool ColumnScheme::processFields() {
     int fieldIdx = 0;
 
     try {
@@ -34,7 +34,7 @@ bool Column::processFields() {
     }
 }
 
-void Column::processName(int &idx) {
+void ColumnScheme::processName(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -48,7 +48,7 @@ void Column::processName(int &idx) {
     }
 }
 
-void Column::processType(int &idx) {
+void ColumnScheme::processType(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -77,7 +77,7 @@ void Column::processType(int &idx) {
     }
 }
 
-void Column::processNotNull(int &idx) {
+void ColumnScheme::processNotNull(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -90,7 +90,7 @@ void Column::processNotNull(int &idx) {
     } catch(std::out_of_range &e) {}
 }
 
-void Column::processDefault(int &idx) {
+void ColumnScheme::processDefault(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -103,7 +103,7 @@ void Column::processDefault(int &idx) {
     } catch(std::out_of_range &e) {}
 }
 
-void Column::processAutoIncrement(int &idx) {
+void ColumnScheme::processAutoIncrement(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -116,7 +116,7 @@ void Column::processAutoIncrement(int &idx) {
     } catch(std::out_of_range &e) {}
 }
 
-void Column::processPrimaryKey(int &idx) {
+void ColumnScheme::processPrimaryKey(int &idx) {
     try {
         string field = this->fields.at(idx);
 
