@@ -4,6 +4,7 @@
 #include "KadizQLFieldScheme.h"
 #include "KadizQLField.h"
 #include "KadizQLTableScheme.h"
+#include "KadizQLResult.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -20,7 +21,7 @@ namespace KadizQL {
         void createStorage();
         fs::path getTableDir();
         void loadScheme();
-        Field *select(vector<string>);
+        Result *select(vector<string>);
     };
 }
 

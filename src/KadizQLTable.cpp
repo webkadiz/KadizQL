@@ -8,6 +8,7 @@
 #include "../include/utils.h"
 #include "../include/KadizQLFieldScheme.h"
 #include "../include/CSVParser.h"
+#include "../include/KadizQLResult.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -104,7 +105,7 @@ void Table::loadScheme() {
     tableSchemeFile.close();
 }
 
-Field *Table::select(vector<string> fieldNames) {
+Result *Table::select(vector<string> fieldNames) {
     string tableDataFileName = this->getTableDir() / (tableName + ".data");
     int countLines, countErrors;
     string line;

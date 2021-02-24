@@ -1,0 +1,7 @@
+
+
+namespace KadizQL {
+    class Result {
+
+    };
+}
