@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "KadizQLColumnScheme.h"
+#include "KadizQLFieldScheme.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -10,11 +10,10 @@ namespace KadizQL {
     class Table {
     private:
         string tableName;
-        // vector<ColumnScheme *> ;
+        vector<FieldScheme *> schema;
     public:
         Table(string);
         bool create(vector<vector<string>>);
-        std::string readTableFromFile(std::string filename);
         void createScheme(vector<vector<string>>);
         void createStorage();
         fs::path getTableDir();

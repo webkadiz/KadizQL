@@ -6,7 +6,7 @@
 #include "../include/KadizQLDB.h"
 #include "../include/KadizQLTable.h"
 #include "../include/utils.h"
-#include "../include/KadizQLColumnScheme.h"
+#include "../include/KadizQLFieldScheme.h"
 #include "../include/CSVParser.h"
 
 using namespace std;
@@ -53,15 +53,15 @@ void Table::createScheme(vector<vector<string>> tableDesc) {
     ofstream tableSchemeFile (tableSchemeFileName);
 
     for (vector<string> fields: tableDesc) {
-        ColumnScheme *columnScheme = new ColumnScheme(fields);
+        FieldScheme *fieldScheme = new FieldScheme(fields);
 
-        bool isAllFieldsProcessed = columnScheme->processFields();
+        bool isAllFieldsProcessed = fieldScheme->processFields();
 
         if (isAllFieldsProcessed == false) {
             throw std::exception();
         }
 
-        vector<string> rightFields = columnScheme->getFields();
+        vector<string> rightFields = fieldScheme->getFields();
 
         for (string field: rightFields) {
             tableSchemeFile << field;
@@ -82,23 +82,6 @@ void Table::createStorage() {
     ofstream tableStorageFile (tableStorageFileName);
 
     tableStorageFile.close();
-}
-
-string Table::readTableFromFile(string filename) {
-    string fileContent, line;
-    ifstream file;
-    
-    file.open(filename);
-
-    if (file.is_open()) {
-        while(getline(file, line)) fileContent += line + "\n";
-        file.close();
-        return fileContent;
-    } else {
-        cout << "Error: file " + filename + " not open";
-        fileContent = "";
-        return fileContent;
-    }
 }
 
 void Table::load() {

@@ -1,21 +1,21 @@
 #include <iostream>
-#include "../include/KadizQLColumnScheme.h"
+#include "../include/KadizQLFieldScheme.h"
 #include "../include/utils.h"
 
 using namespace std;
 using namespace KadizQL;
 
-const vector<string> ColumnScheme::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
+const vector<string> FieldScheme::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
 
-ColumnScheme::ColumnScheme(vector<string> fields) {
+FieldScheme::FieldScheme(vector<string> fields) {
     this->fields = fields;
 }
 
-vector<string> ColumnScheme::getFields() {
+vector<string> FieldScheme::getFields() {
     return this->fields;
 }
 
-bool ColumnScheme::processFields() {
+bool FieldScheme::processFields() {
     int fieldIdx = 0;
 
     try {
@@ -34,7 +34,7 @@ bool ColumnScheme::processFields() {
     }
 }
 
-void ColumnScheme::processName(int &idx) {
+void FieldScheme::processName(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -48,7 +48,7 @@ void ColumnScheme::processName(int &idx) {
     }
 }
 
-void ColumnScheme::processType(int &idx) {
+void FieldScheme::processType(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -77,7 +77,7 @@ void ColumnScheme::processType(int &idx) {
     }
 }
 
-void ColumnScheme::processNotNull(int &idx) {
+void FieldScheme::processNotNull(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -90,7 +90,7 @@ void ColumnScheme::processNotNull(int &idx) {
     } catch(std::out_of_range &e) {}
 }
 
-void ColumnScheme::processDefault(int &idx) {
+void FieldScheme::processDefault(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -103,7 +103,7 @@ void ColumnScheme::processDefault(int &idx) {
     } catch(std::out_of_range &e) {}
 }
 
-void ColumnScheme::processAutoIncrement(int &idx) {
+void FieldScheme::processAutoIncrement(int &idx) {
     try {
         string field = this->fields.at(idx);
 
@@ -116,7 +116,7 @@ void ColumnScheme::processAutoIncrement(int &idx) {
     } catch(std::out_of_range &e) {}
 }
 
-void ColumnScheme::processPrimaryKey(int &idx) {
+void FieldScheme::processPrimaryKey(int &idx) {
     try {
         string field = this->fields.at(idx);
 
