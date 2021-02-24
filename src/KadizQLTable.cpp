@@ -89,12 +89,12 @@ void Table::load() {
 
     ifstream tableSchemeFile (tableSchemeFileName);
 
-    string schemeText = readFile(tableSchemeFile);
+    string tableSchemeText = readFile(tableSchemeFile);
 
     CSVParser *csvParser = new CSVParser();
 
     csvParser->prepare();
-    vector<vector<string>> tableScheme = csvParser->parse(schemeText);
+    vector<vector<string>> tableScheme = csvParser->parse(tableSchemeText);
 
     for(vector<string> params: tableScheme) {
         FieldScheme *fieldScheme = new FieldScheme(params);
