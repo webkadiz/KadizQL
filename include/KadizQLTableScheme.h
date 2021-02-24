@@ -2,6 +2,8 @@
 
 namespace KadizQL {
     class TableScheme {
-        vector<FieldScheme *> fieldSchemes;        
+        vector<FieldScheme *> fieldSchemes;
+    public:
+        void addFieldScheme(FieldScheme *) noexcept;
     };
 }

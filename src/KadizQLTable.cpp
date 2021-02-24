@@ -98,7 +98,7 @@ void Table::loadScheme() {
     for(vector<string> params: tableSchemeData) {
         FieldScheme *fieldScheme = new FieldScheme(params);
 
-        this->tableScheme.push_back(fieldScheme);
+        this->tableScheme->addFieldScheme(fieldScheme);
     }
 
     tableSchemeFile.close();
