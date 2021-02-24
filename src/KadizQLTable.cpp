@@ -61,11 +61,11 @@ void Table::createScheme(vector<vector<string>> tableDesc) {
             throw std::exception();
         }
 
-        vector<string> rightFields = fieldScheme->getProcessedParams();
+        vector<string> processedParams = fieldScheme->getProcessedParams();
 
-        for (string param: rightFields) {
+        for (string param: processedParams) {
             tableSchemeFile << param;
-            if (param == rightFields.back()) continue;
+            if (param == processedParams.back()) continue;
             tableSchemeFile << ",";
         }
         tableSchemeFile << "\n";
