@@ -7,6 +7,8 @@ using namespace KadizQL;
 
 const vector<string> FieldScheme::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
 
+FieldScheme::FieldScheme() {}
+
 FieldScheme::FieldScheme(vector<string> params) {
     this->params = params;
 }

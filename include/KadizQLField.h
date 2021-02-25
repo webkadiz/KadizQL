@@ -6,10 +6,13 @@ using namespace std;
 
 namespace KadizQL {
     class Field {
+    protected:
         string fieldValue;
-        FieldScheme *fieldScheme;
+        FieldScheme fieldScheme;
     public:
-        Field(string, FieldScheme *);        
+        Field(string, FieldScheme &);        
         string getName();
+        void processedValue();
+        void getValue();
     };
 }

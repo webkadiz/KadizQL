@@ -138,7 +138,7 @@ Result Table::select(vector<string> fieldNames) {
                 string fieldValue = parsedRowFields[offset];
                 
                 FieldScheme *fieldScheme = this->tableScheme[offset];
-                Field *field = new Field(fieldValue, fieldScheme);
+                Field *field = new Field(fieldValue, *fieldScheme);
 
                 row.addField(field);
             }
