@@ -1,14 +1,12 @@
-#include <string>
 #include <iostream>
 #include <fstream>
 #include <fstream>
-#include <vector>
 #include "../include/KadizQLDB.h"
 #include "../include/KadizQLTable.h"
 #include "../include/utils.h"
 #include "../include/KadizQLFieldScheme.h"
 #include "../include/CSVParser.h"
-#include "../include/KadizQLResult.h"
+#include "../include/KadizQLRow.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -44,6 +42,8 @@ bool Table::create(vector<vector<string>> tableSchemeData) {
         cerr << "can not create scheme";
     }
     this->createStorage();
+
+    return true;
 }
 
 void Table::createScheme(vector<vector<string>> tableSchemeData) {
@@ -99,13 +99,13 @@ void Table::loadScheme() {
     for(vector<string> params: tableSchemeData) {
         FieldScheme *fieldScheme = new FieldScheme(params);
 
-        this->tableScheme->addFieldScheme(fieldScheme);
+        this->tableScheme.addFieldScheme(fieldScheme);
     }
 
     tableSchemeFile.close();
 }
 
-Result *Table::select(vector<string> fieldNames) {
+Result Table::select(vector<string> fieldNames) {
     string tableDataFileName = this->getTableDir() / (tableName + ".data");
     int countLines, countErrors;
     string line;
@@ -113,7 +113,14 @@ Result *Table::select(vector<string> fieldNames) {
     vector<string> parsedRowFields;
     CSVParser *csvParser = new CSVParser();
     ifstream tableDataFile (tableDataFileName);
+    vector<int> fieldOffset;
+    Row row;
+    Result result;
 
+    for (string fieldName: fieldNames) {
+        int offset = this->tableScheme.getFieldOffsetByName(fieldName); 
+        fieldOffset.push_back(offset);
+    }
 
     while(true) {
         line = readLine(tableDataFile);
@@ -124,6 +131,21 @@ Result *Table::select(vector<string> fieldNames) {
         textForParsing += line;
         try {
             parsedRowFields = csvParser->parse(textForParsing)[0];
+
+            for (size_t i = 0; i < fieldNames.size(); i++) {
+                string fieldName = fieldNames[i];
+                int offset = fieldOffset[i]; 
+                string fieldValue = parsedRowFields[offset];
+                
+                FieldScheme *fieldScheme = this->tableScheme[offset];
+                Field *field = new Field(fieldValue, fieldScheme);
+
+                row.addField(field);
+            }
+
+            result.addRow(row);
+
+            
         } catch(std::exception &e) {
             countErrors++;
         }
@@ -133,4 +155,5 @@ Result *Table::select(vector<string> fieldNames) {
 
     }
 
+    return result;
 }

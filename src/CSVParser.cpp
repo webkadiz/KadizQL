@@ -20,9 +20,6 @@ CSVParser::parse(std::string parseText) {
 	std::size_t parseTextLen = parseText.size();
 
 	while(this->pos < parseTextLen) {
-		int curPos = this->pos;
-		char curChar = this->getCurChar();
-
 		try {
 			this->processStringTokenQuote();
 		} catch(std::exception& e) {

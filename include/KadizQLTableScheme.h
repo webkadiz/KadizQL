@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "KadizQLFieldScheme.h"
 
 namespace KadizQL {
@@ -7,5 +8,6 @@ namespace KadizQL {
     public:
         void addFieldScheme(FieldScheme *) noexcept;
         int getFieldOffsetByName(string);
+        FieldScheme *operator[](int);
     };
 }

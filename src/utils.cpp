@@ -14,7 +14,7 @@ string repeat_string(string str, int n) {
     return repeated_str;
 }
 
-int getStartForErrorMsg(int curPos, string parseText) {
+int getStartForErrorMsg(size_t curPos, string parseText) {
     int start = curPos;
 	while(true) {
 		if (
@@ -28,8 +28,8 @@ int getStartForErrorMsg(int curPos, string parseText) {
     return start;
 }
 
-int getEndForErrorMsg(int curPos, string parseText) {
-	int end = curPos;
+int getEndForErrorMsg(size_t curPos, string parseText) {
+	size_t end = curPos;
 	while(true) {
 		if (
 			end == parseText.size() ||
@@ -42,7 +42,7 @@ int getEndForErrorMsg(int curPos, string parseText) {
     return end;
 }
 
-string getContextForErrorMsg(int curPos, string parseText) {
+string getContextForErrorMsg(size_t curPos, string parseText) {
     int start = getStartForErrorMsg(curPos, parseText);
     int end = getEndForErrorMsg(curPos, parseText);
 

@@ -12,7 +12,7 @@ private:
     std::string tokenType;
     std::vector<std::string> row;
     std::vector<std::vector<std::string>> table;
-    int pos;
+    size_t pos;
     int processLoopState;
     
 public:

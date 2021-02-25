@@ -1,4 +1,5 @@
 #include "../include/KadizQLTableScheme.h"
+#include <stdexcept>
 
 using namespace std;
 using namespace KadizQL;
@@ -18,5 +19,15 @@ int TableScheme::getFieldOffsetByName(string fieldName) {
         idx++;
     }
 
-    return offset
+    return offset;
+}
+
+FieldScheme *TableScheme::operator[](int idx) {
+    try {
+        FieldScheme *fieldScheme = this->fieldSchemes.at(idx);
+
+        return fieldScheme;
+    } catch(std::out_of_range &e) {
+        return (FieldScheme *) 0;
+    }
 }

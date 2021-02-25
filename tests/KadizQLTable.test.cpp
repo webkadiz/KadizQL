@@ -12,5 +12,5 @@ int main() {
         {"id", "int", "date"}
     });
 
-    table->load();
+    table->loadScheme();
 }

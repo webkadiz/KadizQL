@@ -13,7 +13,7 @@ namespace KadizQL {
     class Table {
     private:
         string tableName;
-        TableScheme *tableScheme;
+        TableScheme tableScheme;
     public:
         Table(string);
         bool create(vector<vector<string>>);
@@ -21,7 +21,7 @@ namespace KadizQL {
         void createStorage();
         fs::path getTableDir();
         void loadScheme();
-        Result *select(vector<string>);
+        Result select(vector<string>);
     };
 }
 
