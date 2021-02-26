@@ -29,11 +29,11 @@ namespace KadizQL {
         vector<string> getProcessedParams();
         void processParams();
     private:
-        void processName(int &);
-        void processType(int &);
-        void processNotNull(int &);
-        void processDefault(int &);
-        void processAutoIncrement(int &);
-        void processPrimaryKey(int &);
+        void processName();
+        void processType();
+        void processNotNull();
+        void processDefault();
+        void processAutoIncrement();
+        void processPrimaryKey();
     };
 }
