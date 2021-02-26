@@ -12,6 +12,7 @@ FieldScheme::FieldScheme() {
     this->_isDefault = false;
     this->_isAutoIncrement = false;
     this->_isPrimaryKey = false;
+    this->paramIter = 0;
 }
 
 FieldScheme::FieldScheme(vector<string> params) : FieldScheme() {
@@ -27,15 +28,13 @@ vector<string> FieldScheme::getProcessedParams() {
 }
 
 void FieldScheme::processParams() {
-    int paramIdx = 0;
-
     try {
-        this->processName(paramIdx);
-        this->processType(paramIdx);
-        this->processNotNull(paramIdx);
-        this->processDefault(paramIdx);
-        this->processAutoIncrement(paramIdx);
-        this->processPrimaryKey(paramIdx);
+        this->processName();
+        this->processType();
+        this->processNotNull();
+        this->processDefault();
+        this->processAutoIncrement();
+        this->processPrimaryKey();
     } catch(std::out_of_range &e) {
         throw e;
     } catch(std::exception &e) {
@@ -43,14 +42,14 @@ void FieldScheme::processParams() {
     }
 }
 
-void FieldScheme::processName(int &idx) {
+void FieldScheme::processName() {
     try {
-        string param = this->params.at(idx);
+        string param = this->params.at(this->paramIter);
 
         param = toUpperCase(param);
         this->processedParams.push_back(param);
         this->name = param;
-        idx++;
+        this->paramIter++;
     } catch(std::out_of_range &e) {
         cerr << "set name for column";
 
@@ -58,13 +57,12 @@ void FieldScheme::processName(int &idx) {
     }
 }
 
-void FieldScheme::processType(int &idx) {
+void FieldScheme::processType() {
     try {
-        string param = this->params.at(idx);
+        string param = this->params.at(this->paramIter);
 
         param = toUpperCase(param);
         this->processedParams.push_back(param);
-
 
         for (string type: TYPES) {
             if (param.find(type) == 0) {
@@ -77,7 +75,7 @@ void FieldScheme::processType(int &idx) {
             throw std::exception();
         }
 
-        idx++;
+        this->paramIter++;
     } catch(std::out_of_range &e) {
         cerr << "set type for column";
 
@@ -89,58 +87,58 @@ void FieldScheme::processType(int &idx) {
     }
 }
 
-void FieldScheme::processNotNull(int &idx) {
+void FieldScheme::processNotNull() {
     try {
-        string param = this->params.at(idx);
+        string param = this->params.at(this->paramIter);
 
         param = toUpperCase(param);
         this->processedParams.push_back(param);
 
         if (param == "NOT NULL") {
             this->_isNotNull = true;
-            idx++;
+            this->paramIter++;
         }
     } catch(std::out_of_range &e) {}
 }
 
-void FieldScheme::processDefault(int &idx) {
+void FieldScheme::processDefault() {
     try {
-        string param = this->params.at(idx);
+        string param = this->params.at(this->paramIter);
 
         param = toUpperCase(param);
         this->processedParams.push_back(param);
 
         if (param.find("DEFAULT") == 0) {
             this->_isDefault = true;
-            idx++;
+            this->paramIter++;
         }
     } catch(std::out_of_range &e) {}
 }
 
-void FieldScheme::processAutoIncrement(int &idx) {
+void FieldScheme::processAutoIncrement() {
     try {
-        string param = this->params.at(idx);
+        string param = this->params.at(this->paramIter);
 
         param = toUpperCase(param);
         this->processedParams.push_back(param);
 
         if (param.find("AUTO INCREMENT") == 0) {
             this->_isAutoIncrement = true;
-            idx++;
+            this->paramIter++;
         }
     } catch(std::out_of_range &e) {}
 }
 
-void FieldScheme::processPrimaryKey(int &idx) {
+void FieldScheme::processPrimaryKey() {
     try {
-        string param = this->params.at(idx);
+        string param = this->params.at(this->paramIter);
 
         param = toUpperCase(param);
         this->processedParams.push_back(param);
 
         if (param.find("PRIMARY KEY") == 0) {
             this->_isPrimaryKey = true;
-            idx++;
+            this->paramIter++;
         }
     } catch(std::out_of_range &e) {}
 }

@@ -15,6 +15,7 @@ namespace KadizQL {
         bool _isDefault;
         bool _isAutoIncrement;
         bool _isPrimaryKey;
+        size_t paramIter;
     public:
         FieldScheme();
         FieldScheme(vector<string>);
@@ -27,6 +28,7 @@ namespace KadizQL {
         vector<string> getParams();
         vector<string> getProcessedParams();
         void processParams();
+    private:
         void processName(int &);
         void processType(int &);
         void processNotNull(int &);
