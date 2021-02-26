@@ -28,6 +28,8 @@ vector<string> FieldScheme::getProcessedParams() {
 }
 
 void FieldScheme::processParams() {
+    if (this->paramIter > this->params.size()) return;
+    
     try {
         this->processName();
         this->processType();
