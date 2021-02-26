@@ -7,6 +7,7 @@
 #include "../include/KadizQLFieldScheme.h"
 #include "../include/CSVParser.h"
 #include "../include/KadizQLRow.h"
+#include "../include/KadizQLFieldFabric.h"
 
 using namespace std;
 using namespace KadizQL;
@@ -138,14 +139,13 @@ Result Table::select(vector<string> fieldNames) {
                 string fieldValue = parsedRowFields[offset];
                 
                 FieldScheme *fieldScheme = this->tableScheme[offset];
-                Field *field = new Field(fieldValue, *fieldScheme);
+
+                Field *field = FieldFabric::createField(fieldValue, *fieldScheme);
 
                 row.addField(field);
             }
 
-            result.addRow(row);
-
-            
+            result.addRow(row);            
         } catch(std::exception &e) {
             countErrors++;
         }

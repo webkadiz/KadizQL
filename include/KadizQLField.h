@@ -11,8 +11,7 @@ namespace KadizQL {
         FieldScheme fieldScheme;
     public:
         Field(string, FieldScheme &);        
+        ~Field();
         string getName();
-        void processedValue();
-        void getValue();
     };
 }

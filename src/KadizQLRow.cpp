@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include "../include/KadizQLField.h"
 #include "../include/KadizQLRow.h"
+#include <iostream>
 
 using namespace std;
 using namespace KadizQL;
@@ -19,6 +20,7 @@ Field *Row::operator[](string key) {
         return (Field *) 0;
     }
 }
+
 
 void Row::addField(Field *field) {
     this->row.push_back(field);

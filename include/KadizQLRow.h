@@ -12,6 +12,7 @@ namespace KadizQL {
     public:
         Row();
         Row(vector<Field *>);
+
         Field *operator[](string);
         void addField(Field *);
     };

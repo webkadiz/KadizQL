@@ -145,3 +145,7 @@ void FieldScheme::processPrimaryKey(int &idx) {
 string FieldScheme::getName() {
     return this->name;
 }
+
+string FieldScheme::getType() {
+    return this->type;
+}

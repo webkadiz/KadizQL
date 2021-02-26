@@ -1,11 +1,12 @@
 #include "KadizQLField.h"
 
 namespace KadizQL {
-    class FieldInt: Field {
+    class FieldInt: public Field {
         int realFieldValue;
     public:
-        FieldInt(string, FieldScheme);
-        void processedValue();
-        int getValue();
+        FieldInt(string, FieldScheme &);
+        int processedValue();
+        int data();
+        operator int();
     };
 }

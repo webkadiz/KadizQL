@@ -4,14 +4,19 @@
 using namespace std;
 using namespace KadizQL;
 
-FieldInt::FieldInt(string fieldValue, FieldScheme fieldScheme) :
-    Field(fieldValue, fieldScheme) {}
+FieldInt::FieldInt(string fieldValue, FieldScheme &fieldScheme) :
+    Field(fieldValue, fieldScheme) {
+    this->processedValue();
+}
 
-void FieldInt::processedValue() {
+int FieldInt::processedValue() {
     this->realFieldValue = stoi(this->fieldValue);
 }
 
-int FieldInt::getValue() {
-    this->processedValue();
+int FieldInt::data() {
+    return realFieldValue;
+}
+
+FieldInt::operator int() {
     return realFieldValue;
 }
