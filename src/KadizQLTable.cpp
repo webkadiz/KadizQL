@@ -57,11 +57,7 @@ void Table::createScheme(vector<vector<string>> tableSchemeData) {
     for (vector<string> params: tableSchemeData) {
         FieldScheme *fieldScheme = new FieldScheme(params);
 
-        bool isAllParamsProcessed = fieldScheme->processParams();
-
-        if (isAllParamsProcessed == false) {
-            throw std::exception();
-        }
+        fieldScheme->processParams();
 
         vector<string> processedParams = fieldScheme->getProcessedParams();
 

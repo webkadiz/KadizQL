@@ -8,7 +8,6 @@ Field *FieldFabric::createField(string fieldValue, FieldScheme &fieldScheme) {
     if (fieldScheme.getType() == "INT") {
         return new FieldInt(fieldValue, fieldScheme);
     } else {
-        return new FieldInt(fieldValue, fieldScheme);
-        // return new Field(fieldValue, fieldScheme);
+        throw std::exception();
     }
 }
