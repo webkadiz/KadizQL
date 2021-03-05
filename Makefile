@@ -1,5 +1,5 @@
 compile-command = g++ ./src/$@.cpp -c -o ./src/$@.o
-CXXFLAGS = -std=c++17 -Wall
+CXXFLAGS = -std=c++17 -g -Wall
 
 
 prepare:

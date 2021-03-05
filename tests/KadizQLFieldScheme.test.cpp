@@ -6,26 +6,23 @@ using namespace KadizQL;
 
 int main() {
     {
-        FieldScheme fieldScheme;
-        FieldScheme fieldScheme2({"id", "int"});
+        // name for column doesn't exists
 
-        fieldScheme = fieldScheme2;
+        try {
+            FieldScheme fieldScheme({});
 
-        if (fieldScheme.getParams() == fieldScheme2.getParams()) {
-            cout << "test 1 passed" << endl;
-        } else {
-            cout << "test 1 failed" << endl;
+            cout << "test 1 failed";
             exit(1);
+        } catch(std::exception &e) {
+            cout << "test 1 passed" << endl;
         }
     }
 
     {
-        // name for column doesn't exists
-
-        FieldScheme fieldScheme;
+        // type for column doesn't exists
 
         try {
-            fieldScheme.processParams();
+            FieldScheme fieldScheme({"id"});
 
             cout << "test 2 failed";
             exit(2);
@@ -35,12 +32,10 @@ int main() {
     }
 
     {
-        // type for column doesn't exists
-
-        FieldScheme fieldScheme({"id"});
+        // type for column wrong
 
         try {
-            fieldScheme.processParams();
+            FieldScheme fieldScheme({"id", "abrakadabra"});
 
             cout << "test 3 failed";
             exit(3);
@@ -50,29 +45,30 @@ int main() {
     }
 
     {
-        // type for column wrong
-
-        FieldScheme fieldScheme({"id", "abrakadabra"});
-
-        try {
-            fieldScheme.processParams();
-
-            cout << "test 4 failed";
-            exit(4);
-        } catch(std::exception &e) {
-            cout << "test 4 passed" << endl;
-        }
-    }
-
-    {
         // simple type description, optional params not used
 
         FieldScheme fieldScheme({"id", "date"});
 
-        fieldScheme.processParams();
-
         if (
             fieldScheme.isNotNull() == false &&
+            fieldScheme.isDefault() == false &&
+            fieldScheme.isAutoIncrement() == false &&
+            fieldScheme.isPrimaryKey() == false
+        ) {
+            cout << "test 4 passed" << endl;
+        } else {
+            cout << "test 4 failed";
+            exit(4);
+        }
+    }
+
+    {
+        // optional param "not null" used
+
+        FieldScheme fieldScheme({"id", "date", "not null"});
+
+        if (
+            fieldScheme.isNotNull() == true &&
             fieldScheme.isDefault() == false &&
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == false
@@ -85,15 +81,13 @@ int main() {
     }
 
     {
-        // optional param "not null" used
+        // optional param "default" used
 
-        FieldScheme fieldScheme({"id", "date", "not null"});
-
-        fieldScheme.processParams();
+        FieldScheme fieldScheme({"id", "date", "default 123"});
 
         if (
-            fieldScheme.isNotNull() == true &&
-            fieldScheme.isDefault() == false &&
+            fieldScheme.isNotNull() == false &&
+            fieldScheme.isDefault() == true &&
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == false
         ) {
@@ -105,16 +99,14 @@ int main() {
     }
 
     {
-        // optional param "default" used
+        // optional param "auto increment" used
 
-        FieldScheme fieldScheme({"id", "date", "default 123"});
-
-        fieldScheme.processParams();
+        FieldScheme fieldScheme({"id", "date", "auto increment"});
 
         if (
             fieldScheme.isNotNull() == false &&
-            fieldScheme.isDefault() == true &&
-            fieldScheme.isAutoIncrement() == false &&
+            fieldScheme.isDefault() == false &&
+            fieldScheme.isAutoIncrement() == true &&
             fieldScheme.isPrimaryKey() == false
         ) {
             cout << "test 7 passed" << endl;
@@ -125,17 +117,15 @@ int main() {
     }
 
     {
-        // optional param "auto increment" used
+        // optional param "primary key" used
 
-        FieldScheme fieldScheme({"id", "date", "auto increment"});
-
-        fieldScheme.processParams();
+        FieldScheme fieldScheme({"id", "date", "primary key"});
 
         if (
             fieldScheme.isNotNull() == false &&
             fieldScheme.isDefault() == false &&
-            fieldScheme.isAutoIncrement() == true &&
-            fieldScheme.isPrimaryKey() == false
+            fieldScheme.isAutoIncrement() == false &&
+            fieldScheme.isPrimaryKey() == true
         ) {
             cout << "test 8 passed" << endl;
         } else {
@@ -145,14 +135,12 @@ int main() {
     }
 
     {
-        // optional param "primary key" used
+        // optional param "not null", "primary key" used
 
-        FieldScheme fieldScheme({"id", "date", "primary key"});
-
-        fieldScheme.processParams();
+        FieldScheme fieldScheme({"id", "date", "not null", "primary key"});
 
         if (
-            fieldScheme.isNotNull() == false &&
+            fieldScheme.isNotNull() == true &&
             fieldScheme.isDefault() == false &&
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == true
@@ -165,11 +153,9 @@ int main() {
     }
 
     {
-        // optional param "not null", "primary key" used
+        // test on register
 
-        FieldScheme fieldScheme({"id", "date", "not null", "primary key"});
-
-        fieldScheme.processParams();
+        FieldScheme fieldScheme({"ID", "Date", "NOT null", "priMary key"});
 
         if (
             fieldScheme.isNotNull() == true &&
@@ -185,18 +171,11 @@ int main() {
     }
 
     {
-        // test on register
+        // test on name register
 
-        FieldScheme fieldScheme({"ID", "Date", "NOT null", "priMary key"});
+        FieldScheme fieldScheme({"id", "Date"});
 
-        fieldScheme.processParams();
-
-        if (
-            fieldScheme.isNotNull() == true &&
-            fieldScheme.isDefault() == false &&
-            fieldScheme.isAutoIncrement() == false &&
-            fieldScheme.isPrimaryKey() == true
-        ) {
+        if (fieldScheme.getName() == "ID") {
             cout << "test 11 passed" << endl;
         } else {
             cout << "test 11 failed";
@@ -205,32 +184,15 @@ int main() {
     }
 
     {
-        // test on name register
-
-        FieldScheme fieldScheme({"id", "Date"});
-
-        fieldScheme.processParams();
-
-        if (fieldScheme.getName() == "ID") {
-            cout << "test 12 passed" << endl;
-        } else {
-            cout << "test 12 failed";
-            exit(12);
-        }
-    }
-
-    {
         // test on name register type
 
         FieldScheme fieldScheme({"id", "Date"});
 
-        fieldScheme.processParams();
-
         if (fieldScheme.getType() == "DATE") {
-            cout << "test 13 passed" << endl;
+            cout << "test 12 passed" << endl;
         } else {
-            cout << "test 13 failed";
-            exit(13);
+            cout << "test 12 failed";
+            exit(12);
         }
     }
 }

@@ -7,16 +7,14 @@ using namespace KadizQL;
 
 const vector<string> FieldScheme::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
 
-FieldScheme::FieldScheme() {
+FieldScheme::FieldScheme(vector<string> params) {
     this->_isNotNull = false;
     this->_isDefault = false;
     this->_isAutoIncrement = false;
     this->_isPrimaryKey = false;
     this->paramIter = 0;
-}
-
-FieldScheme::FieldScheme(vector<string> params) : FieldScheme() {
     this->params = params;
+    this->processParams();
 }
 
 vector<string> FieldScheme::getParams() {

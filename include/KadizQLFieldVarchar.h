@@ -1,14 +1,16 @@
-#include <string>
+#pragma once
+
 #include <variant>
+#include <string>
 #include "KadizQLField.h"
 
 using namespace std;
 
 namespace KadizQL {
-    class FieldInt: public Field {
-        int realFieldValue;
+    class FieldVarchar: public Field {
+        string realFieldValue;
     public:
-        FieldInt(string, FieldScheme *);
+        FieldVarchar(string, FieldScheme *);
         void processedValue();
         dataTypes data();
     };

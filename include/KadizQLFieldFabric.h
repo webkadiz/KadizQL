@@ -4,6 +4,6 @@
 namespace KadizQL {
     class FieldFabric {
     public:
-        static Field *createField(string, FieldScheme &);
+        static Field *createField(string, FieldScheme *);
     };
 }

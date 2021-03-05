@@ -17,7 +17,6 @@ namespace KadizQL {
         bool _isPrimaryKey;
         size_t paramIter;
     public:
-        FieldScheme();
         FieldScheme(vector<string>);
         string getName();
         string getType();

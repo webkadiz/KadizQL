@@ -1,8 +1,10 @@
 #include <fstream>
 #include <string>
 #include "../include/utils.h"
+#include "../include/KadizQLField.h"
 
 using namespace std;
+using namespace KadizQL;
 
 string repeat_string(string str, int n) {
     string repeated_str;

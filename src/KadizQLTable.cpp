@@ -136,7 +136,7 @@ Result Table::select(vector<string> fieldNames) {
                 
                 FieldScheme *fieldScheme = this->tableScheme[offset];
 
-                Field *field = FieldFabric::createField(fieldValue, *fieldScheme);
+                Field *field = FieldFabric::createField(fieldValue, fieldScheme);
 
                 row.addField(field);
             }

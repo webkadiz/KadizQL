@@ -2,7 +2,6 @@
 #include <stdexcept>
 #include "../include/KadizQLField.h"
 #include "../include/KadizQLRow.h"
-#include <iostream>
 
 using namespace std;
 using namespace KadizQL;

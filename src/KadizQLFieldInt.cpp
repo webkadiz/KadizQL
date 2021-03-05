@@ -1,22 +1,19 @@
 #include <string>
+#include <variant>
 #include "../include/KadizQLFieldInt.h"
 
 using namespace std;
 using namespace KadizQL;
 
-FieldInt::FieldInt(string fieldValue, FieldScheme &fieldScheme) :
+FieldInt::FieldInt(string fieldValue, FieldScheme *fieldScheme) :
     Field(fieldValue, fieldScheme) {
-    this->processedValue();
+    processedValue();
 }
 
-int FieldInt::processedValue() {
-    this->realFieldValue = stoi(this->fieldValue);
+void FieldInt::processedValue() {
+    realFieldValue = stoi(fieldValue);
 }
 
-int FieldInt::data() {
-    return realFieldValue;
-}
-
-FieldInt::operator int() {
-    return realFieldValue;
+dataTypes FieldInt::data() {
+    return (dataTypes) realFieldValue;
 }
