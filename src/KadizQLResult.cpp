@@ -7,7 +7,11 @@ using namespace std;
 using namespace KadizQL;
 
 Field *Result::operator[](string key) {
-        
+    if (rows.size() == 1) {
+        return rows[0][key];
+    } else {
+        return nullptr;
+    }     
 }
 
 Row Result::operator[](size_t idx) {

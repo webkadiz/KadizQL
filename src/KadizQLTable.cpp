@@ -57,8 +57,6 @@ void Table::createScheme(vector<vector<string>> tableSchemeData) {
     for (vector<string> params: tableSchemeData) {
         FieldScheme *fieldScheme = new FieldScheme(params);
 
-        fieldScheme->processParams();
-
         vector<string> processedParams = fieldScheme->getProcessedParams();
 
         for (string param: processedParams) {
@@ -76,6 +74,8 @@ void Table::createStorage() {
     fs::path tableDir = this->getTableDir();
     fs::path tableStorageFilePath = tableDir / tableName;
     string tableStorageFileName = tableStorageFilePath.string() + ".data";
+
+    if (fs::exists(tableStorageFileName)) return;
 
     ofstream tableStorageFile (tableStorageFileName);
 
@@ -111,7 +111,6 @@ Result Table::select(vector<string> fieldNames) {
     CSVParser *csvParser = new CSVParser();
     ifstream tableDataFile (tableDataFileName);
     vector<int> fieldOffset;
-    Row row;
     Result result;
 
     for (string fieldName: fieldNames) {
@@ -120,6 +119,7 @@ Result Table::select(vector<string> fieldNames) {
     }
 
     while(true) {
+        Row row;
         line = readLine(tableDataFile);
         countLines++;
 
@@ -127,7 +127,7 @@ Result Table::select(vector<string> fieldNames) {
 
         textForParsing += line;
         try {
-            parsedRowFields = csvParser->parse(textForParsing)[0];
+            parsedRowFields = csvParser->parse(textForParsing).at(0);
 
             for (size_t i = 0; i < fieldNames.size(); i++) {
                 string fieldName = fieldNames[i];
@@ -141,7 +141,8 @@ Result Table::select(vector<string> fieldNames) {
                 row.addField(field);
             }
 
-            result.addRow(row);            
+            result.addRow(row);
+            textForParsing = "";          
         } catch(std::exception &e) {
             countErrors++;
         }
@@ -149,6 +150,25 @@ Result Table::select(vector<string> fieldNames) {
 
     if (countErrors == countLines) {
 
+    }
+
+    return result;
+}
+
+Result Table::insert(vector<vector<string>> tableData) {
+    Result result;
+    string tableDataFileName = this->getTableDir() / (tableName + ".data");
+
+    ofstream tableDataFile;
+    tableDataFile.open(tableDataFileName, ofstream::out | ofstream::app);
+
+    for (vector<string> row: tableData) {
+        for (string field: row) {
+            tableDataFile << field;
+            if (field == row.back()) continue;
+            tableDataFile << ",";
+        }
+        tableDataFile << "\n";
     }
 
     return result;

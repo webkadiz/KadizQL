@@ -8,7 +8,6 @@ int main() {
     CSVParser *parser = new CSVParser();
     std::vector<std::vector<std::string>> table;
 
-
 // input:
 /*123
 
@@ -65,7 +64,10 @@ int main() {
     }
 
 // input:
-/*"125","126"
+/*
+
+"hello, student. my name is "",vlad"",
+"125","126"
 "quote""","""apple"", ""orange"""
 "banana"
 */

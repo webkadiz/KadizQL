@@ -22,6 +22,7 @@ namespace KadizQL {
         fs::path getTableDir();
         void loadScheme();
         Result select(vector<string>);
+        Result insert(vector<vector<string>>);
     };
 }
 

@@ -1,5 +1,6 @@
 #include <fstream>
 #include <string>
+#include <iostream>
 #include "../include/utils.h"
 #include "../include/KadizQLField.h"
 
@@ -83,4 +84,15 @@ string readLine(ifstream &file) {
 	}
 
 	return text;
+}
+
+void testPassed(size_t &testCount) {
+	testCount++;
+	cout << "test " << testCount << " passed" << endl;
+}
+
+void testFailed(size_t &testCount) {
+	testCount++;
+	cout << "test " << testCount << " failed" << endl;
+	exit(testCount);
 }

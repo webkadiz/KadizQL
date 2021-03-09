@@ -2,10 +2,6 @@ compile-command = g++ ./src/$@.cpp -c -o ./src/$@.o
 CXXFLAGS = -std=c++17 -g -Wall
 
 
-prepare:
-	cp include/* tests
-	cp include/* src
-
 compile:
 	cd src && g++ $(CXXFLAGS) *.cpp -c
 

@@ -1,4 +1,5 @@
 #include "../include/KadizQLTableScheme.h"
+#include "../include/utils.h"
 #include <stdexcept>
 
 using namespace std;
@@ -12,6 +13,7 @@ int TableScheme::getFieldOffsetByName(string fieldName) {
 
     int idx = 0, offset = -1;
     for (FieldScheme *fieldScheme: fieldSchemes) {
+        fieldName = toUpperCase(fieldName);
         if (fieldScheme->getName() == fieldName) {
             offset = idx;
             break;
@@ -19,8 +21,7 @@ int TableScheme::getFieldOffsetByName(string fieldName) {
         idx++;
     }
 
-    return offset;
-}
+    return offset;}
 
 FieldScheme *TableScheme::operator[](int idx) {
     try {
