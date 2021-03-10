@@ -6,14 +6,27 @@ using namespace std;
 using namespace KadizQL;
 
 FieldVarchar::FieldVarchar(string fieldValue, FieldScheme *fieldScheme) :
-    Field(fieldValue, fieldScheme) {
-    processedValue();
-}
+    Field(fieldScheme) {
+    
+    for (size_t i = 0; i < fieldValue.length(); i++) {
+        binaryFieldValue[i] = fieldValue[i];    
+    }
 
-void FieldVarchar::processedValue() {
-    realFieldValue = fieldValue;
+    for (size_t i = 0; i < sizeof(binaryFieldValue) - fieldValue.length(); i++) {
+        binaryFieldValue[i] = 0;    
+    }
+
+    stringFieldValue = fieldValue;
 }
 
 dataTypes FieldVarchar::data() {
-    return (dataTypes) realFieldValue;
+    return (dataTypes) stringFieldValue;
+}
+
+char *FieldVarchar::getEncodedData() {
+    return binaryFieldValue;
+}
+
+size_t FieldVarchar::getEncodedSize() {
+    return sizeof(binaryFieldValue);
 }

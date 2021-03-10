@@ -6,8 +6,12 @@ namespace KadizQL {
     class TableScheme {
         vector<FieldScheme *> fieldSchemes;
     public:
-        void addFieldScheme(FieldScheme *) noexcept;
+        TableScheme();
+        TableScheme(vector<vector<string>>);
         int getFieldOffsetByName(string);
-        FieldScheme *operator[](int);
+        FieldScheme *operator[](size_t);
+        FieldScheme *at(size_t);
+        void at(size_t, FieldScheme *);
+        size_t length();
     };
 }

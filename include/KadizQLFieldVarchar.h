@@ -8,10 +8,12 @@ using namespace std;
 
 namespace KadizQL {
     class FieldVarchar: public Field {
-        string realFieldValue;
+        char binaryFieldValue[255];
+        string stringFieldValue;
     public:
         FieldVarchar(string, FieldScheme *);
-        void processedValue();
         dataTypes data();
+        char *getEncodedData();
+        size_t getEncodedSize();
     };
 }

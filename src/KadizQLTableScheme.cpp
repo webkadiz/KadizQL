@@ -1,12 +1,21 @@
-#include "../include/KadizQLTableScheme.h"
-#include "../include/utils.h"
+#include <vector>
+#include <string>
 #include <stdexcept>
+#include "../include/KadizQLTableScheme.h"
+#include "../include/KadizQLFieldScheme.h"
+#include "../include/utils.h"
 
 using namespace std;
 using namespace KadizQL;
 
-void TableScheme::addFieldScheme(FieldScheme *fieldScheme) noexcept {
-    this->fieldSchemes.push_back(fieldScheme);
+TableScheme::TableScheme() {}
+
+TableScheme::TableScheme(vector<vector<string>> schemes) {
+    for (vector<string> fieldSchemeVector: schemes) {
+        FieldScheme *fieldScheme = new FieldScheme(fieldSchemeVector);
+
+        fieldSchemes.push_back(fieldScheme);
+    }
 }
 
 int TableScheme::getFieldOffsetByName(string fieldName) {
@@ -23,12 +32,20 @@ int TableScheme::getFieldOffsetByName(string fieldName) {
 
     return offset;}
 
-FieldScheme *TableScheme::operator[](int idx) {
-    try {
-        FieldScheme *fieldScheme = this->fieldSchemes.at(idx);
+FieldScheme *TableScheme::operator[](size_t idx) {
+    return at(idx);
+}
 
-        return fieldScheme;
-    } catch(std::out_of_range &e) {
-        return (FieldScheme *) 0;
+FieldScheme *TableScheme::at(size_t idx) {
+    return fieldSchemes.at(idx);
+}
+
+void TableScheme::at(size_t idx, FieldScheme *fieldScheme) {
+    if (idx < fieldSchemes.size()) {
+        fieldSchemes[idx] = fieldScheme;
     }
+}
+
+size_t TableScheme::length() {
+    return fieldSchemes.size();
 }

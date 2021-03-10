@@ -19,7 +19,7 @@ Table::Table(string tableName) {
 }
 
 fs::path Table::getTableDir() {
-    return DB::getDBDir() / this->tableName;
+    return DB::getDBDir() / tableName;
 }
 
 bool Table::create(vector<vector<string>> tableSchemeData) {
@@ -29,13 +29,14 @@ bool Table::create(vector<vector<string>> tableSchemeData) {
         return false;
     }
 
+    if (fs::exists(getTableDir())) return true;
+
     try {
-        fs::create_directory(this->getTableDir());
+        fs::create_directory(getTableDir());
     } catch(fs::filesystem_error& e) {
         cerr << "directory " << tableName << " cann't be created";
         return false;
     }
-
 
     try {
         this->createScheme(tableSchemeData);
@@ -71,15 +72,22 @@ void Table::createScheme(vector<vector<string>> tableSchemeData) {
 }
 
 void Table::createStorage() {
+    loadScheme();
     fs::path tableDir = this->getTableDir();
     fs::path tableStorageFilePath = tableDir / tableName;
-    string tableStorageFileName = tableStorageFilePath.string() + ".data";
+    string tableStorageFileNameBase = tableStorageFilePath.string();
+    string tableStorageFileName;
 
-    if (fs::exists(tableStorageFileName)) return;
+    cout << tableScheme.length() << endl;
 
-    ofstream tableStorageFile (tableStorageFileName);
+    for (size_t i = 0; i < tableScheme.length(); i++) {
+        FieldScheme *fieldScheme = tableScheme[i];
 
-    tableStorageFile.close();
+        tableStorageFileName = tableStorageFileNameBase + "." + fieldScheme->getName();
+
+        cout << tableStorageFileName << endl;
+        ofstream tableStorageFile (tableStorageFileName);        
+    }
 }
 
 void Table::loadScheme() {
@@ -93,11 +101,7 @@ void Table::loadScheme() {
 
     vector<vector<string>> tableSchemeData = csvParser->parse(tableSchemeText);
 
-    for(vector<string> params: tableSchemeData) {
-        FieldScheme *fieldScheme = new FieldScheme(params);
-
-        this->tableScheme.addFieldScheme(fieldScheme);
-    }
+    tableScheme = TableScheme(tableSchemeData);
 
     tableSchemeFile.close();
 }
@@ -155,20 +159,25 @@ Result Table::select(vector<string> fieldNames) {
     return result;
 }
 
-Result Table::insert(vector<vector<string>> tableData) {
+Result Table::insert(Row &row) {
     Result result;
-    string tableDataFileName = this->getTableDir() / (tableName + ".data");
+    string dataFileNameBase = this->getTableDir() / tableName;
 
-    ofstream tableDataFile;
-    tableDataFile.open(tableDataFileName, ofstream::out | ofstream::app);
+    ios_base::openmode mode = ofstream::out | ofstream::app | ofstream::binary;
+    vector<ofstream> dataFiles(row.length());
 
-    for (vector<string> row: tableData) {
-        for (string field: row) {
-            tableDataFile << field;
-            if (field == row.back()) continue;
-            tableDataFile << ",";
-        }
-        tableDataFile << "\n";
+    for (size_t i = 0; i < row.length(); i++) {
+        Field *field = row.at(i);
+        string fieldName = field->getName();
+        string dataFileName = dataFileNameBase + "." + fieldName;
+
+        cout << dataFileName << endl;
+
+        dataFiles.at(i).open(dataFileName, mode);
+        
+        dataFiles.at(i).write(field->getEncodedData(), field->getEncodedSize());
+
+        dataFiles.at(i).close();
     }
 
     return result;

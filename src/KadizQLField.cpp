@@ -5,8 +5,7 @@
 using namespace std;
 using namespace KadizQL;
 
-Field::Field(string fieldValue, FieldScheme *fieldScheme) {
-    this->fieldValue = fieldValue;
+Field::Field(FieldScheme *fieldScheme) {
     this->fieldScheme = fieldScheme;
 }
 
@@ -14,9 +13,4 @@ Field::~Field() {}
 
 string Field::getName() {
     return this->fieldScheme->getName();
-}
-
-dataTypes Field::data() {
-    dataTypes v = 1;
-    return v;
 }

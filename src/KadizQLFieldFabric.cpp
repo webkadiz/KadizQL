@@ -5,11 +5,11 @@
 
 using namespace KadizQL;
 
-Field *FieldFabric::createField(string fieldValue, FieldScheme *fieldScheme) {
+Field *FieldFabric::createField(dataTypes fieldValue, FieldScheme *fieldScheme) {
     if (fieldScheme->getType() == "INT") {
-        return new FieldInt(fieldValue, fieldScheme);
+        return new FieldInt(get<int>(fieldValue), fieldScheme);
     } else if (fieldScheme->getType() == "VARCHAR") {
-        return new FieldVarchar(fieldValue, fieldScheme);
+        return new FieldVarchar(get<string>(fieldValue), fieldScheme);
     } else {
         throw std::exception();
     }
