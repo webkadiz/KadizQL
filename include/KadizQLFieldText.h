@@ -8,8 +8,7 @@ using namespace std;
 
 namespace KadizQL {
     class FieldText: public Field {
-        char binaryFieldValue[255];
-        string stringFieldValue;
+        string binaryFieldValue;
     public:
         FieldText(string);
         dataTypes data();

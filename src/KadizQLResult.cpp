@@ -7,17 +7,17 @@ using namespace std;
 using namespace KadizQL;
 
 Field *Result::operator[](string key) {
-    if (rows.size() == 1) {
-        return rows[0][key];
+    if (resultRows.size() == 1) {
+        return resultRows[0][key];
     } else {
         return nullptr;
     }     
 }
 
 Row Result::operator[](size_t idx) {
-    return this->rows.at(idx);
+    return resultRows.at(idx);
 }
 
-void Result::addRow(Row row) {
-    this->rows.push_back(row);
+void Result::add(Row row) {
+    resultRows.push_back(row);
 }

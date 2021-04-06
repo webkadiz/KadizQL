@@ -1,50 +1,57 @@
 #include <string>
-#include <cassert>
 #include <iostream>
 #include "../include/KadizQLResult.h"
 #include "../include/KadizQLRow.h"
-#include "../include/KadizQLFieldScheme.h"
 #include "../include/KadizQLField.h"
-#include "../include/KadizQLFieldFabric.h"
+#include "../include/KadizQLFieldInt.h"
+#include "../include/KadizQLFieldText.h"
 #include "../include/utils.h"
 
 using namespace std;
 using namespace KadizQL;
 
 int main() {
+    size_t testNumber = 0;
+
     Row row;
 
-    FieldScheme *fieldSchemeId = new FieldScheme({"id", "int"});
-    FieldScheme *fieldSchemeName = new FieldScheme({"name", "varchar"});
+    int id = 1;
+    string name = "1";
 
-    Field *fieldId = FieldFabric::createField("1", fieldSchemeId);
-    Field *fieldName = FieldFabric::createField("1", fieldSchemeName);
+    Field *fieldId = new FieldInt(id);
+    Field *fieldName = new FieldText(name);
 
-    row.addField(fieldId);
-    row.addField(fieldName);
+    row.add(fieldId, "id");
+    row.add(fieldName, "name");
 
     {
         Result result;
 
-        result.addRow(row);
+        result.add(row);
 
-        assert(result["ID"] != nullptr);
-        assert(result["TEST"] == nullptr);
+        if (result["ID"] == nullptr || result["name"] == nullptr) {
+            testFailed(testNumber);
+        }
 
-        cout << "test passed" << endl;
+        testPassed(testNumber);
     }
 
     {
         Result result;
 
-        result.addRow(row);
-        result.addRow(row);
+        result.add(row);
+        result.add(row);
 
-        assert(result[0]["id"] != nullptr);
-        assert(get<int>(result[0]["id"]) == 1);
-        assert(get<string>(result[0]["name"]) == "1");
+        name.resize(255);
 
-        cout << "test passed" << endl;
+        if (result[0]["id"] == nullptr ||
+            get<int>(result[0]["id"]) != id ||
+            get<string>(result[0]["name"]) != name
+        ) {
+            testFailed(testNumber);
+        }
+
+        testPassed(testNumber);
     }
 
     return 0;

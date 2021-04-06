@@ -8,10 +8,10 @@ using namespace std;
 
 namespace KadizQL {
     class Result {
-        vector<Row> rows;
+        vector<Row> resultRows;
     public:
         Field *operator[](string);
         Row operator[](size_t);
-        void addRow(Row);
+        void add(Row);
     };
 }

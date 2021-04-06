@@ -6,14 +6,18 @@
 using namespace std;
 using namespace KadizQL;
 
-FieldInt::FieldInt(const char* fieldValue) {
-    for (int i = 0; i < 4; i++) {
-        binaryFieldValue[i] = fieldValue[i];
+FieldInt::FieldInt(string fieldValue) {
+    binaryFieldValue = string(4, 0);
+
+    for (size_t i = 0; i < fieldValue.length(); i++) {
+        binaryFieldValue[i] = fieldValue[i];    
     }
+
     decode();
 }
 
 FieldInt::FieldInt(int fieldValue) {
+    binaryFieldValue = string(4, 0);
     intFieldValue = fieldValue;
     encode();
 }
@@ -35,9 +39,9 @@ dataTypes FieldInt::data() {
 }
 
 char *FieldInt::getEncodedData() {
-    return binaryFieldValue;
+    return binaryFieldValue.data();
 }
 
 size_t FieldInt::getEncodedSize() {
-    return sizeof(binaryFieldValue);
+    return binaryFieldValue.length();
 }

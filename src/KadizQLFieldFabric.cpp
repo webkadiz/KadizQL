@@ -10,9 +10,9 @@ Field *FieldFabric::createField(string fieldValue, string type) {
     type = toUpperCase(type);
 
     if (type == "INT") {
-        return new FieldInt(fieldValue.data());
+        return new FieldInt(fieldValue);
     } else if (type == "TEXT") {
-        return new FieldText(fieldValue.data());
+        return new FieldText(fieldValue);
     } else {
         throw std::exception();
     }

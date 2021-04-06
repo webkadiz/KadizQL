@@ -11,14 +11,17 @@ int main() {
 
     {
         FieldText fieldText("some text");
+        string trueStr = "some text";
 
-        if (get<string>(fieldText.data()) == "some text") {
+        trueStr.resize(255);
+ 
+        if (get<string>(fieldText.data()) == trueStr) {
             testPassed(testNumber);
         } else {
             testFailed(testNumber);
         }
 
-        if (get<string>(&fieldText) == "some text") {
+        if (get<string>(&fieldText) == trueStr) {
             testPassed(testNumber);
         } else {
             testFailed(testNumber);

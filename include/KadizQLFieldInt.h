@@ -6,10 +6,10 @@ using namespace std;
 
 namespace KadizQL {
     class FieldInt: public Field {
-        char binaryFieldValue[4];
+        string binaryFieldValue;
         int intFieldValue;
     public:
-        FieldInt(const char *);
+        FieldInt(string);
         FieldInt(int);
         void decode();
         void encode();
