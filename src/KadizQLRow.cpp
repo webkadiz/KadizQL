@@ -8,74 +8,56 @@
 using namespace std;
 using namespace KadizQL;
 
-Row::Row() {}
-
-Row::Row(vector<Field *> fields, TableScheme tableScheme_) {
-    tableScheme = tableScheme_;
-
-    for (size_t i = 0; i < tableScheme.length(); i++) {
-        Field *field = fields.at(i);
-
-        fieldVector.push_back(field);
-    }
+Field *Row::operator[](string key) {
+    return at(key);
 }
 
-Field *Row::operator[](string key) {
+Field *Row::operator[](size_t idx) {
+    return at(idx);
+}
+
+Field *Row::at(string key) {
     try {
         key = toUpperCase(key);
-        return this->fieldMap.at(key);
-    } catch(out_of_range &e) {
-        return nullptr;
-    }
-}
-
-Field *Row::operator[](size_t key) {
-    try {
-        return this->fieldVector.at(key);
+        return fieldMap.at(key);
     } catch(out_of_range &e) {
         return nullptr;
     }
 }
 
 Field *Row::at(size_t idx) {
-    return this->fieldVector.at(idx);
-}
-
-
-Field *Row::at(string key) {
-    return this->fieldMap.at(key);
+    try {
+        return fieldVector.at(idx);
+    } catch(out_of_range &e) {
+        return nullptr;
+    }
 }
 
 void Row::at(size_t idx, Field *field) {
-    if (idx < fieldVector.size()) {
-        fieldVector[idx] = field;
-    } else {
-        clog << "Row: idx larger vector size";
-    }
+    fieldVector.at(idx);
+    fieldVector[idx] = field;
+    fieldMap[fieldNamesVector[idx]] = field;
 }
 
 void Row::at(string key, Field *field) {
     key = toUpperCase(key);
-
-    for (size_t i = 0; i < tableScheme.length(); i++) {
-        if (key == tableScheme[i]->getName()) {
-            fieldMap[key] = field;
-            return;
-        }
-    }
-
-    clog << "Row: key not contains in table scheme";
+    fieldMap.at(key);
+    fieldMap[key] = field;
+    fieldVector[fieldNamesMap[key]] = field;
 }
 
 size_t Row::length() {
     return fieldVector.size();
 }
 
-void Row::addField(Field *field) {
-    string fieldName = field->getName();
+void Row::add(Field *field, string key) {
+    size_t idx = fieldVector.size();
+    key = toUpperCase(key);
+    
+    if (fieldMap.find(key) != fieldMap.end()) throw exception();
 
-    if (this->fieldMap[fieldName]) throw exception();
-
-    this->fieldVector.push_back(field);
-    this->fieldMap[fieldName] = field;
+    fieldVector.push_back(field);
+    fieldNamesVector.push_back(key);
+    fieldNamesMap[key] = idx;
+    fieldMap[key] = field;
 }

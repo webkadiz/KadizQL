@@ -1,52 +1,86 @@
-#include <cassert>
 #include <iostream>
 #include "../include/KadizQLRow.h"
-#include "../include/KadizQLFieldFabric.h"
 #include "../include/KadizQLField.h"
-#include "../include/KadizQLFieldScheme.h"
+#include "../include/KadizQLFieldInt.h"
+#include "../include/KadizQLFieldText.h"
+#include "../include/utils.h"
 
 using namespace std;
 using namespace KadizQL;
 
 int main() {
-    FieldScheme *fieldSchemeId = new FieldScheme({"id", "int"});
-    FieldScheme *fieldSchemeName = new FieldScheme({"name", "varchar"});
-
-    Field *fieldId = FieldFabric::createField("1", fieldSchemeId);
-    Field *fieldName = FieldFabric::createField("name", fieldSchemeName);
+    size_t testNumber = 0;
+    Field *fieldId = new FieldInt("1");
+    Field *fieldId2 = new FieldInt("1");
+    Field *fieldName = new FieldText("some text");
 
     {
         Row row;
 
-        row.addField(fieldId);
-        row.addField(fieldName);
+        row.add(fieldId, "id");
+        row.add(fieldName, "name");
 
-        assert(row["id"] != nullptr);
-        assert(row["name"] != nullptr);
-        assert(row["NAME"] != nullptr);
-        assert(row["Id"] != nullptr);
-        cout << "test passed" << endl;
+        if (row["id"] == nullptr || 
+            row["name"] == nullptr ||
+            row["NAME"] == nullptr ||
+            row["Id"] == nullptr
+        ) {
+            testFailed(testNumber);
+        }
+        testPassed(testNumber);
     }
 
     {
         Row row;
 
         try {
-            row.addField(fieldId);
-            row.addField(fieldId);
-            assert(("dublicated field type", false));
+            row.add(fieldId, "id");
+            row.add(fieldId, "id");
+            testFailed(testNumber);
         } catch(exception &e) {
-            cout << "test passed" << endl;
+            testPassed(testNumber);
         }
     }
 
     {
         Row row;
 
-        row.addField(fieldId);
-
-        *row["id"] = *fieldName;
+        if (row["undefined"] == nullptr) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
     }
-    
+
+    {
+        Row row;
+
+        row.add(fieldId, "id");
+        row.add(fieldName, "name");
+
+        row.at("id", fieldId2);
+
+        if (row[0] == fieldId2) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
+    {
+        Row row;
+
+        row.add(fieldId, "id");
+        row.add(fieldName, "name");
+
+        row.at(0, fieldId2);
+
+        if (row["id"] == fieldId2) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
     return 0;
 }

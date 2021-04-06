@@ -40,6 +40,7 @@ int main() {
             {"id", "int", "not null"},
             {"name", "varchar"}
         });
+
         Row row({
             new FieldInt(123, tableScheme.at(0)),
             new FieldVarchar("1234", tableScheme.at(1))
@@ -48,6 +49,12 @@ int main() {
         table->insert(row);
     }
 
+
+    {
+        Result res = table->select({"id"});
+
+        cout << res["id"];
+    }
 
     return 0;
 }

@@ -22,6 +22,10 @@ fs::path Table::getTableDir() {
     return DB::getDBDir() / tableName;
 }
 
+fs::path Table::getTableDataBasename {
+    return (getTableDir() / tableName) + ".";
+}
+
 bool Table::create(vector<vector<string>> tableSchemeData) {
 
     if (DB::getUsedDB().empty()) {
@@ -108,11 +112,6 @@ void Table::loadScheme() {
 
 Result Table::select(vector<string> fieldNames) {
     string tableDataFileName = this->getTableDir() / (tableName + ".data");
-    int countLines, countErrors;
-    string line;
-    string textForParsing;
-    vector<string> parsedRowFields;
-    CSVParser *csvParser = new CSVParser();
     ifstream tableDataFile (tableDataFileName);
     vector<int> fieldOffset;
     Result result;
@@ -157,6 +156,17 @@ Result Table::select(vector<string> fieldNames) {
     }
 
     return result;
+}
+
+Result Table::select(vector<string> fieldNames) {
+
+    ios_base::openmode mode = ifstream::in | ifstream::binary;
+    vector<ifstream> dataFiles(fieldNames.length());
+
+    for (string fieldName: fieldNames) {
+        string dataFileName = getTableDataBasename + fieldName;
+    }
+
 }
 
 Result Table::insert(Row &row) {

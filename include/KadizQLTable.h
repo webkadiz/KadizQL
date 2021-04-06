@@ -21,6 +21,7 @@ namespace KadizQL {
         void createScheme(vector<vector<string>>);
         void createStorage();
         fs::path getTableDir();
+        fs::path getTableDataBasename();
         void loadScheme();
         Result select(vector<string>);
         Result insert(Row &);

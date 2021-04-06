@@ -1,12 +1,11 @@
 #include <string>
 #include <variant>
-#include "../include/KadizQLFieldVarchar.h"
+#include "../include/KadizQLFieldText.h"
 
 using namespace std;
 using namespace KadizQL;
 
-FieldVarchar::FieldVarchar(string fieldValue, FieldScheme *fieldScheme) :
-    Field(fieldScheme) {
+FieldText::FieldText(string fieldValue) {
     
     for (size_t i = 0; i < fieldValue.length(); i++) {
         binaryFieldValue[i] = fieldValue[i];    
@@ -19,14 +18,14 @@ FieldVarchar::FieldVarchar(string fieldValue, FieldScheme *fieldScheme) :
     stringFieldValue = fieldValue;
 }
 
-dataTypes FieldVarchar::data() {
+dataTypes FieldText::data() {
     return (dataTypes) stringFieldValue;
 }
 
-char *FieldVarchar::getEncodedData() {
+char *FieldText::getEncodedData() {
     return binaryFieldValue;
 }
 
-size_t FieldVarchar::getEncodedSize() {
+size_t FieldText::getEncodedSize() {
     return sizeof(binaryFieldValue);
 }

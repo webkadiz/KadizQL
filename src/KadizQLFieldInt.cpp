@@ -6,16 +6,14 @@
 using namespace std;
 using namespace KadizQL;
 
-FieldInt::FieldInt(const char* fieldValue, FieldScheme *fieldScheme) :
-    Field(fieldScheme) {
+FieldInt::FieldInt(const char* fieldValue) {
     for (int i = 0; i < 4; i++) {
         binaryFieldValue[i] = fieldValue[i];
     }
     decode();
 }
 
-FieldInt::FieldInt(int fieldValue, FieldScheme *fieldScheme) :
-    Field(fieldScheme) {
+FieldInt::FieldInt(int fieldValue) {
     intFieldValue = fieldValue;
     encode();
 }

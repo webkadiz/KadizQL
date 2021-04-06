@@ -7,11 +7,11 @@
 using namespace std;
 
 namespace KadizQL {
-    class FieldVarchar: public Field {
+    class FieldText: public Field {
         char binaryFieldValue[255];
         string stringFieldValue;
     public:
-        FieldVarchar(string, FieldScheme *);
+        FieldText(string);
         dataTypes data();
         char *getEncodedData();
         size_t getEncodedSize();

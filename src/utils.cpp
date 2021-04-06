@@ -86,13 +86,13 @@ string readLine(ifstream &file) {
 	return text;
 }
 
-void testPassed(size_t &testCount) {
-	testCount++;
-	cout << "test " << testCount << " passed" << endl;
+void testPassed(size_t &testNumber) {
+	testNumber++;
+	cout << "test " << testNumber << " passed" << endl;
 }
 
-void testFailed(size_t &testCount) {
-	testCount++;
-	cout << "test " << testCount << " failed" << endl;
-	exit(testCount);
+void testFailed(size_t &testNumber) {
+	testNumber++;
+	cout << "test " << testNumber << " failed" << endl;
+	exit(testNumber);
 }

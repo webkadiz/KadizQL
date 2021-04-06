@@ -10,10 +10,9 @@ namespace KadizQL {
     class Row {
         vector<Field *> fieldVector;
         map<string, Field *> fieldMap;
-        TableScheme tableScheme;
+        vector<string> fieldNamesVector;
+        map<string, size_t> fieldNamesMap;
     public:
-        Row();
-        Row(vector<Field *>, TableScheme);
         Field *operator[](size_t);
         Field *operator[](string);
         Field *at(size_t);
@@ -21,6 +20,6 @@ namespace KadizQL {
         void at(size_t, Field *);
         void at(string, Field*);
         size_t length();
-        void addField(Field *);
+        void add(Field *, string);
     };
 }

@@ -9,9 +9,8 @@ namespace KadizQL {
         char binaryFieldValue[4];
         int intFieldValue;
     public:
-        FieldInt(const char *, FieldScheme *);
-        FieldInt(int, FieldScheme *);
-        void toInt();
+        FieldInt(const char *);
+        FieldInt(int);
         void decode();
         void encode();
         dataTypes data();
