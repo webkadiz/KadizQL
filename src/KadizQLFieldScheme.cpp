@@ -5,7 +5,7 @@
 using namespace std;
 using namespace KadizQL;
 
-const vector<string> FieldScheme::TYPES = {"INT", "FLOAT", "VARCHAR", "TEXT", "DATE"};
+const vector<string> FieldScheme::TYPES = {"INT", "FLOAT", "TEXT", "DATE"};
 
 FieldScheme::FieldScheme(vector<string> params) {
     this->_isNotNull = false;
@@ -26,7 +26,7 @@ vector<string> FieldScheme::getProcessedParams() {
 }
 
 void FieldScheme::processParams() {
-    if (this->paramIter >= this->params.size()) return;
+    if (this->paramIter > this->params.size()) return;
     
     try {
         this->processName();

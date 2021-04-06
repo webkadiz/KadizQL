@@ -1,20 +1,21 @@
-#include <iostream>
 #include "../include/KadizQLFieldScheme.h"
+#include "../include/utils.h"
 
 using namespace std;
 using namespace KadizQL;
 
 int main() {
+    size_t testNumber = 0;
+
     {
         // name for column doesn't exists
 
         try {
             FieldScheme fieldScheme({});
 
-            cout << "test 1 failed";
-            exit(1);
+            testFailed(testNumber);
         } catch(std::exception &e) {
-            cout << "test 1 passed" << endl;
+            testPassed(testNumber);
         }
     }
 
@@ -24,10 +25,9 @@ int main() {
         try {
             FieldScheme fieldScheme({"id"});
 
-            cout << "test 2 failed";
-            exit(2);
+            testFailed(testNumber);
         } catch(std::exception &e) {
-            cout << "test 2 passed" << endl;
+            testPassed(testNumber);
         }
     }
 
@@ -37,10 +37,9 @@ int main() {
         try {
             FieldScheme fieldScheme({"id", "abrakadabra"});
 
-            cout << "test 3 failed";
-            exit(3);
+            testFailed(testNumber);
         } catch(std::exception &e) {
-            cout << "test 3 passed" << endl;
+            testPassed(testNumber);
         }
     }
 
@@ -55,10 +54,9 @@ int main() {
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == false
         ) {
-            cout << "test 4 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 4 failed";
-            exit(4);
+            testFailed(testNumber);
         }
     }
 
@@ -73,10 +71,9 @@ int main() {
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == false
         ) {
-            cout << "test 5 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 5 failed";
-            exit(5);
+            testFailed(testNumber);
         }
     }
 
@@ -91,10 +88,9 @@ int main() {
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == false
         ) {
-            cout << "test 6 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 6 failed";
-            exit(6);
+            testFailed(testNumber);
         }
     }
 
@@ -109,10 +105,9 @@ int main() {
             fieldScheme.isAutoIncrement() == true &&
             fieldScheme.isPrimaryKey() == false
         ) {
-            cout << "test 7 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 7 failed";
-            exit(7);
+            testFailed(testNumber);
         }
     }
 
@@ -127,10 +122,9 @@ int main() {
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == true
         ) {
-            cout << "test 8 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 8 failed";
-            exit(8);
+            testFailed(testNumber);
         }
     }
 
@@ -145,10 +139,9 @@ int main() {
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == true
         ) {
-            cout << "test 9 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 9 failed";
-            exit(9);
+            testFailed(testNumber);
         }
     }
 
@@ -163,10 +156,9 @@ int main() {
             fieldScheme.isAutoIncrement() == false &&
             fieldScheme.isPrimaryKey() == true
         ) {
-            cout << "test 10 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 10 failed";
-            exit(10);
+            testFailed(testNumber);
         }
     }
 
@@ -176,10 +168,9 @@ int main() {
         FieldScheme fieldScheme({"id", "Date"});
 
         if (fieldScheme.getName() == "ID") {
-            cout << "test 11 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 11 failed";
-            exit(11);
+            testFailed(testNumber);
         }
     }
 
@@ -189,10 +180,9 @@ int main() {
         FieldScheme fieldScheme({"id", "Date"});
 
         if (fieldScheme.getType() == "DATE") {
-            cout << "test 12 passed" << endl;
+            testPassed(testNumber);
         } else {
-            cout << "test 12 failed";
-            exit(12);
+            testFailed(testNumber);
         }
     }
 }

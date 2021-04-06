@@ -2,14 +2,17 @@
 #include "../include/KadizQLFieldInt.h"
 #include "../include/KadizQLFieldText.h"
 #include "../include/KadizQLField.h"
+#include "../include/utils.h"
 
 using namespace KadizQL;
 
-Field *FieldFabric::createField(string fieldValue, FieldScheme *fieldScheme) {
-    if (fieldScheme->getType() == "INT") {
-        return new FieldInt(fieldValue);
-    } else if (fieldScheme->getType() == "TEXT") {
-        return new FieldText(fieldValue);
+Field *FieldFabric::createField(string fieldValue, string type) {
+    type = toUpperCase(type);
+
+    if (type == "INT") {
+        return new FieldInt(fieldValue.data());
+    } else if (type == "TEXT") {
+        return new FieldText(fieldValue.data());
     } else {
         throw std::exception();
     }
