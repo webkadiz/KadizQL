@@ -9,7 +9,7 @@ using namespace KadizQL;
 FieldInt::FieldInt(string fieldValue) {
     binaryFieldValue = string(4, 0);
 
-    for (size_t i = 0; i < fieldValue.length(); i++) {
+    for (size_t i = 0; i < fieldValue.size(); i++) {
         binaryFieldValue[i] = fieldValue[i];    
     }
 
@@ -43,5 +43,5 @@ char *FieldInt::getEncodedData() {
 }
 
 size_t FieldInt::getEncodedSize() {
-    return binaryFieldValue.length();
+    return binaryFieldValue.size();
 }

@@ -9,7 +9,7 @@ using namespace KadizQL;
 FieldText::FieldText(string fieldValue) {
     binaryFieldValue = string(255, 0);
 
-    for (size_t i = 0; i < fieldValue.length(); i++) {
+    for (size_t i = 0; i < fieldValue.size(); i++) {
         binaryFieldValue[i] = fieldValue[i];  
     }
 }
@@ -23,5 +23,5 @@ char *FieldText::getEncodedData() {
 }
 
 size_t FieldText::getEncodedSize() {
-    return binaryFieldValue.length();
+    return binaryFieldValue.size();
 }

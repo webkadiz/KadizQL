@@ -17,6 +17,11 @@ FieldScheme::FieldScheme(vector<string> params) {
     this->processParams();
 }
 
+size_t FieldScheme::getEncodedSize() {
+    if (type == "INT") return 4;
+    else if (type == "TEXT") return 255;
+}
+
 vector<string> FieldScheme::getParams() {
     return this->params;
 }

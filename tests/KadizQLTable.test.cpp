@@ -2,58 +2,88 @@
 #include "../include/KadizQLTable.h"
 #include "../include/KadizQLResult.h"
 #include "../include/KadizQLFieldInt.h"
-#include "../include/KadizQLFieldVarchar.h"
+#include "../include/KadizQLFieldText.h"
+#include "../include/KadizQLFieldNull.h"
+#include "../include/ConditionFalse.h"
 #include "../include/utils.h"
 
 using namespace KadizQL;
 
 int main() {
-    size_t testCount = 0;
+    size_t testNumber = 0;
 
     DB::useDB("test");
 
-    Table *table = new Table("name");
+    Table *table = new Table("table");
 
     table->create({
         {"id", "int", "not null"},
         {"name", "text"}
     });
 
-    // table->loadScheme();
-
-    Result res = table->select({"id"});
-
-    // if (get<int>(res[0]["id"]) == 12) {
-    //     testPassed(testCount);
-    // } else {
-    //     testFailed(testCount);
-    // }
-
-    // if (get<int>(res[1]["id"]) == 555) {
-    //     testPassed(testCount);
-    // } else {
-    //     testFailed(testCount);
-    // }
-
     {
-        TableScheme tableScheme({
-            {"id", "int", "not null"},
-            {"name", "varchar"}
-        });
+        Row row;
+        Result res;
 
-        Row row({
-            new FieldInt(123, tableScheme.at(0)),
-            new FieldVarchar("1234", tableScheme.at(1))
-        }, tableScheme);
-        
-        table->insert(row);
+        Field *id = new FieldInt(123);
+        Field *name = new FieldText("alex"); 
+
+        row.add(id, "id");
+        row.add(name, "name");
+
+        res = table->insert(row);
+
+        if (res.getAffectedRowsCount() == 0) {
+            testFailed(testNumber);
+        }
+
+        testPassed(testNumber);
     }
-
 
     {
         Result res = table->select({"id"});
 
-        cout << res["id"];
+        if (get<int>(res["id"]) == 123) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
+    {
+        Row row;
+        Result res;
+
+        row.add(new FieldInt(124), "id");
+        row.add(new FieldNull("text"), "name");
+
+        res = table->insert(row);
+
+        if (res.getAffectedRowsCount() == 0) {
+            testFailed(testNumber);
+        }
+
+        testPassed(testNumber);
+    }
+
+    {
+        Result res = table->select({"id"});
+
+        if (get<int>(res[1]["id"]) == 124) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
+    {
+        Result res = table->select({"id"}, new ConditionFalse());
+
+        if (res.size() == 0) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
     }
 
     return 0;

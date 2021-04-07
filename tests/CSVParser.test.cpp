@@ -57,7 +57,6 @@ int main() {
     ) {
         printf("test 4 passed\n");
     } else {
-        std::cout << table[1][0];
         printf("n%d", table[1][0][3] == ',');
         printf("test 4 failed\n", table.size());
         exit(4);

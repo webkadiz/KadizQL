@@ -30,7 +30,8 @@ int TableScheme::getFieldOffsetByName(string fieldName) {
         idx++;
     }
 
-    return offset;}
+    return offset;
+}
 
 FieldScheme *TableScheme::operator[](size_t idx) {
     return at(idx);
@@ -41,9 +42,8 @@ FieldScheme *TableScheme::at(size_t idx) {
 }
 
 void TableScheme::at(size_t idx, FieldScheme *fieldScheme) {
-    if (idx < fieldSchemes.size()) {
-        fieldSchemes[idx] = fieldScheme;
-    }
+    fieldSchemes.at(idx);
+    fieldSchemes[idx] = fieldScheme
 }
 
 size_t TableScheme::length() {

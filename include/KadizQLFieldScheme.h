@@ -24,6 +24,7 @@ namespace KadizQL {
         bool isDefault();
         bool isAutoIncrement();
         bool isPrimaryKey();
+        size_t getEncodedSize();
         vector<string> getParams();
         vector<string> getProcessedParams();
         void processParams();
