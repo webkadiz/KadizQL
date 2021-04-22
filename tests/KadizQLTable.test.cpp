@@ -5,6 +5,7 @@
 #include "../include/KadizQLFieldText.h"
 #include "../include/KadizQLFieldNull.h"
 #include "../include/ConditionFalse.h"
+#include "../include/ConditionEqual.h"
 #include "../include/utils.h"
 
 using namespace KadizQL;
@@ -78,6 +79,82 @@ int main() {
 
     {
         Result res = table->select({"id"}, new ConditionFalse());
+
+        if (res.size() == 0) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
+    {
+        Result res = table->select({"id"}, new ConditionEqual("id", 123));
+
+        if (res.size() == 1 &&
+            res[0].length() == 1 &&
+            get<int>(res["id"]) == 123
+        ) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
+    {
+        Result res = table->update("id", new FieldInt(125), new ConditionEqual("id", 124));
+
+        if (res.getAffectedRowsCount() == 1) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+
+        res = table->select({"id"});
+
+        if (res.size() == 2 &&
+            get<int>(res[1]["id"]) == 125 &&
+            get<int>(res[0]["id"]) == 123
+        ) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
+    {
+        Result res;
+
+        res = table->remove(new ConditionEqual("id", 125));
+
+        if (res.getAffectedRowsCount() == 1) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+
+        res = table->select({"id"});
+
+        if (res.size() == 1 &&
+            get<int>(res["id"]) == 123
+        ) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
+    {
+        Result res;
+
+        res = table->remove();
+
+        if (res.getAffectedRowsCount() == 1) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+
+        res = table->select({"id"});
 
         if (res.size() == 0) {
             testPassed(testNumber);

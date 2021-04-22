@@ -38,6 +38,10 @@ dataTypes FieldInt::data() {
     return (dataTypes) intFieldValue;
 }
 
+string FieldInt::getType() {
+    return "INT";
+}
+
 char *FieldInt::getEncodedData() {
     return binaryFieldValue.data();
 }

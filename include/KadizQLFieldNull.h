@@ -8,6 +8,7 @@ namespace KadizQL {
     public:
         FieldNull(string);
         dataTypes data();
+        string getType();
         char *getEncodedData();
         size_t getEncodedSize();
     };

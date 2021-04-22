@@ -26,12 +26,14 @@ namespace KadizQL {
         fs::path getTableDir();
         string getTableDataBasename();
         void loadScheme();
+        void clearData();
         size_t getRowsCount();
         Row readRow(size_t);
         Row selectFromRow(Row &, vector<string> &);
         Result select(vector<string>, Condition *cond = new ConditionTrue());
         Result insert(Row &);
-        Result update(string, Field *);
+        Result update(string, Field *, Condition *cond = new ConditionTrue());
+        Result remove(Condition *cond = new ConditionTrue());
     };
 }
 

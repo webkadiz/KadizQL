@@ -109,6 +109,19 @@ void Table::loadScheme() {
     tableShemeLoaded = true;
 }
 
+void Table::clearData() {
+    for (size_t i = 0; i < tableScheme.length(); i++) {
+        FieldScheme *fieldScheme = tableScheme[i];
+
+        string fieldName = fieldScheme->getName();
+        string dataFileName = getTableDataBasename() + fieldName;
+
+        ofstream dataFile(dataFileName);
+
+        dataFile.close();
+    }
+}
+
 size_t Table::getRowsCount() {
     if (tableScheme.length() == 0) return 0;
 
@@ -171,17 +184,6 @@ Result Table::select(vector<string> fieldNames, Condition *cond) {
     loadScheme();
 
     Result res;
-
-    ios_base::openmode mode = ifstream::binary;
-    vector<ifstream> dataFiles(fieldNames.size());
-
-    for (size_t i = 0; i < fieldNames.size(); i++) {
-        fieldNames[i] = toUpperCase(fieldNames[i]);
-        string dataFileName = getTableDataBasename() + fieldNames[i];
-
-        dataFiles[i].open(dataFileName, mode);
-    }
-
     size_t rowsCount = getRowsCount();
 
     for (size_t i = 0; i < rowsCount; i++) {
@@ -231,8 +233,64 @@ Result Table::insert(Row &row) {
     return res;
 }
 
-Result Table::update(string fieldName, Field *field) {
+Result Table::update(string fieldName, Field *field, Condition *cond) {
+    loadScheme();
+
     Result res;
+
+    ios_base::openmode mode = fstream::in | fstream::out | fstream::binary;
+    fstream dataFile;
+
+    fieldName = toUpperCase(fieldName);
+    string dataFileName = getTableDataBasename() + fieldName;
+
+    dataFile.open(dataFileName, mode);
+
+    size_t rowsCount = getRowsCount();
+
+    for (size_t i = 0; i < rowsCount; i++) {
+        Row row;
+
+        row = readRow(i);
+
+        if (cond->exec(row)) {
+            dataFile.seekg(i * field->getEncodedSize());
+            dataFile.write(field->getEncodedData(), field->getEncodedSize());
+
+            res.incAffectedRowsCount();
+        }
+    }
+
+    dataFile.close();
+
+    return res;
+}
+
+Result Table::remove(Condition *cond) {
+    loadScheme();
+
+    Result res;
+    vector<Row> restRows;
+    size_t rowsCount = getRowsCount();
+
+    for (size_t i = 0; i < rowsCount; i++) {
+        Row row;
+
+        row = readRow(i);
+
+        if (cond->exec(row)) {
+            res.incAffectedRowsCount();
+            continue;
+        }
+
+        restRows.push_back(row);
+    }
+
+    clearData();
+
+    for (size_t i = 0; i < restRows.size(); i++) {
+        insert(restRows[i]);
+    }
 
     return res;
 }

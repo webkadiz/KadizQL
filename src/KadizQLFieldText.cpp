@@ -18,6 +18,10 @@ dataTypes FieldText::data() {
     return (dataTypes) binaryFieldValue;
 }
 
+string FieldText::getType() {
+    return "TEXT";
+}
+
 char *FieldText::getEncodedData() {
     return binaryFieldValue.data();
 }

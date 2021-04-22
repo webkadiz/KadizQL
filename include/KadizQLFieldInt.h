@@ -14,6 +14,7 @@ namespace KadizQL {
         void decode();
         void encode();
         dataTypes data();
+        string getType();
         char *getEncodedData();
         size_t getEncodedSize();
     };

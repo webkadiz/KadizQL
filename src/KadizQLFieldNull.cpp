@@ -13,6 +13,10 @@ dataTypes FieldNull::data() {
     return (dataTypes) pretendField->data();
 }
 
+string FieldNull::getType() {
+    return pretendField->getType();
+}
+
 char *FieldNull::getEncodedData() {
     return pretendField->getEncodedData();
 }

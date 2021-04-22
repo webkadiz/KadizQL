@@ -12,6 +12,7 @@ namespace KadizQL {
     public:
         FieldText(string);
         dataTypes data();
+        string getType();
         char *getEncodedData();
         size_t getEncodedSize();
     };
