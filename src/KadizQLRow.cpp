@@ -8,6 +8,17 @@
 using namespace std;
 using namespace KadizQL;
 
+Row::Row() {}
+
+Row::Row(vector<pair<Field *, string>> fields) {
+    for (size_t i = 0; i < fields.size(); i++) {
+        Field *field = get<0>(fields[i]);
+        string key = get<1>(fields[i]);
+
+        this->add(field, key);
+    }
+}
+
 Field *Row::operator[](string key) {
     return at(key);
 }

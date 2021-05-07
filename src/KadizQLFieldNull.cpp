@@ -5,8 +5,8 @@
 using namespace std;
 using namespace KadizQL;
 
-FieldNull::FieldNull(string type) {
-    pretendField = FieldFabric::createField("", type);
+FieldNull::FieldNull() {
+    pretendField = FieldFabric::createField("", "TEXT");
 }
 
 dataTypes FieldNull::data() {

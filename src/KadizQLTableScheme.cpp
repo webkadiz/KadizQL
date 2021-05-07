@@ -43,7 +43,7 @@ FieldScheme *TableScheme::at(size_t idx) {
 
 void TableScheme::at(size_t idx, FieldScheme *fieldScheme) {
     fieldSchemes.at(idx);
-    fieldSchemes[idx] = fieldScheme
+    fieldSchemes[idx] = fieldScheme;
 }
 
 size_t TableScheme::length() {

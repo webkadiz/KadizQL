@@ -56,7 +56,7 @@ int main() {
         Result res;
 
         row.add(new FieldInt(124), "id");
-        row.add(new FieldNull("text"), "name");
+        row.add(new FieldNull(), "name");
 
         res = table->insert(row);
 
@@ -88,11 +88,14 @@ int main() {
     }
 
     {
-        Result res = table->select({"id"}, new ConditionEqual("id", 123));
+        string nameForSearch = "alex";
+        nameForSearch.resize(255);
 
+        Result res = table->select({"name"}, new ConditionEqual("name", nameForSearch));
+        
         if (res.size() == 1 &&
             res[0].length() == 1 &&
-            get<int>(res["id"]) == 123
+            get<string>(res["name"]) == nameForSearch
         ) {
             testPassed(testNumber);
         } else {
@@ -118,6 +121,26 @@ int main() {
             testPassed(testNumber);
         } else {
             testFailed(testNumber);
+        }
+    }
+
+    {
+        Result res;
+
+        res = table->select({"id", "name"});
+
+        for (size_t i = 0; i < res.size(); i++) {
+            for (size_t j = 0; j < res[i].length(); j++) {
+                Field *field = res[i][j];
+
+                if (field->getType() == "INT") {
+                    cout << get<int>(field) << " ";
+                } else {
+                    cout << get<string>(field) << " ";
+                }
+            }
+
+            cout << endl;
         }
     }
 

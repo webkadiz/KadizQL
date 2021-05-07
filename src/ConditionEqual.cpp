@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../include/ConditionEqual.h"
 
 using namespace KadizQL;

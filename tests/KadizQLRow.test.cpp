@@ -82,5 +82,18 @@ int main() {
         }
     }
 
+    {
+        Row row ({
+            make_pair(fieldId, "id"),
+            make_pair(fieldName, "name")
+        });
+
+        if (row["id"] == fieldId) {
+            testPassed(testNumber);
+        } else {
+            testFailed(testNumber);
+        }
+    }
+
     return 0;
 }

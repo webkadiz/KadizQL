@@ -6,7 +6,7 @@ namespace KadizQL {
     class FieldNull: public Field {
         Field *pretendField;
     public:
-        FieldNull(string);
+        FieldNull();
         dataTypes data();
         string getType();
         char *getEncodedData();

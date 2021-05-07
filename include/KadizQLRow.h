@@ -13,6 +13,8 @@ namespace KadizQL {
         vector<string> fieldNamesVector;
         map<string, size_t> fieldNamesMap;
     public:
+        Row();
+        Row(vector<pair<Field *, string>>);
         Field *operator[](size_t);
         Field *operator[](string);
         Field *at(size_t);
